@@ -10,14 +10,14 @@ public class Event {
 	String description;
 	static String dateCreated; // CREATED
 	String dateLastModified; // LAST-MODIFIED
-	int dateStart; // DTSTART
-	int dateEnd; // DTEND
-	int timeStart; // DTSTART
-	int timeEnd; // DTEND
+	String dateStart; // DTSTART
+	String dateEnd; // DTEND
+	String timeStart; // DTSTART
+	String timeEnd; // DTEND
 	
 	String uid;
 	String classType;
-	int location;
+	String location;
 	
 	   //////////////////////////////////////////////////////////////
 	   /// ** constructors ** 
@@ -30,7 +30,7 @@ public class Event {
 		dateCreated = getDateTime();
 	}
 	
-	public Event(String titlex, String descriptx, int dateStartx, int dateEndx, int timeStartx, int timeEndx) {
+	public Event(String titlex, String descriptx, String dateStartx, String dateEndx, String timeStartx, String timeEndx) {
 		title = titlex;
 		description = descriptx;
 		dateStart = dateStartx;
@@ -69,6 +69,14 @@ public class Event {
 	public String getDateModified() {
 		return dateLastModified;
 	}
+	
+	public String getTimeStart() {
+		return timeStart;
+	}
+	
+	public String getTimeEnd() {
+		return timeEnd;
+	}
 	////////////////////////////////////////////////////////////////
 	// * mutator methods *
 	
@@ -91,19 +99,19 @@ public class Event {
 		dateLastModified = x;
 	}
 	
-	public void setDateStart(int x) {
+	public void setDateStart(String x) {
 		dateStart = x;
 	}
 	
-	public void setDateEnd(int x) {
+	public void setDateEnd(String x) {
 		dateEnd = x;
 	}
 	
-	public void setTimeStart(int x) {
+	public void setTimeStart(String x) {
 		timeStart = x;
 	}
 	
-	public void setTimeEnd(int x) {
+	public void setTimeEnd(String x) {
 		timeEnd = x;
 	}
 }
