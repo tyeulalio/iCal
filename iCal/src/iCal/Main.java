@@ -24,7 +24,7 @@ public class Main {
 		//Used to test code
 		System.out.println("Event is: " + event1.title);
 		System.out.println("Event description is: " + event1.description);
-		System.out.println("Date created is: " + event1.dateCreated);
+		System.out.println("Date created is: " + event1.getDateCreated());
 		
 		
 
