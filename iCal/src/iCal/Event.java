@@ -8,19 +8,72 @@ import java.util.Scanner;
 public class Event {
 	String title;
 	String description;
-	int dateCreated; // CREATED
-	int dateLastModified; // LAST-MODIFIED
+	static String dateCreated; // CREATED
+	String dateLastModified; // LAST-MODIFIED
+	int dateStart; // DTSTART
+	int dateEnd; // DTEND
 	int timeStart; // DTSTART
 	int timeEnd; // DTEND
+	
 	String uid;
 	String classType;
 	int location;
 	
-	public static void getTime()
-	{
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-	    System.out.println( sdf.format(cal.getTime()) );
+	   //////////////////////////////////////////////////////////////
+	   /// ** constructors ** 
+	   //////////////////////////////////////////////////////////////
+	   //////////////////////////////////////////////////////////////
+	public Event() {
+		title = "";
+		description = "";
+		String classType = "Public";
 	}
 	
+	public Event(String titlex, String descriptx, int dateStartx, int dateEndx, int timeStartx, int timeEndx) {
+		title = titlex;
+		description = descriptx;
+		dateStart = dateStartx;
+		dateEnd = dateEndx;
+		timeStart = timeStartx;
+		timeEnd = timeEndx;
+		String classType = "Public";
+	}
+	
+   //////////////////////////////////////////////////////////////
+   /// ** methods ** 
+   //////////////////////////////////////////////////////////////
+
+	// * accessor methods *
+	
+	// This method takes the current date and time and returns it
+	public static String getDateTime()
+	{
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("HHmmsszz");
+	    return ( sdf.format(cal.getTime()) );
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+	
+	public String getDateCreated() {
+		return dateCreated;
+	}
+	
+	public String getDateModified() {
+		return dateLastModified;
+	}
+	////////////////////////////////////////////////////////////////
+	// * mutator methods *
+	
+	// This method sets the current date and time to be the date created 
+	private static void setDateCreated(String s) 
+	{
+		dateCreated = getDateTime();
+	}
 }
