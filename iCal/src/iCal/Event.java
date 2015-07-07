@@ -8,8 +8,10 @@ import java.util.Scanner;
 public class Event {
 	String title;
 	String description;
-	int dateCreated; // CREATED
-	int dateLastModified; // LAST-MODIFIED
+	String dateCreated; // CREATED
+	String dateLastModified; // LAST-MODIFIED
+	int dateStart; // DTSTART
+	int dateEnd; // DTEND
 	int timeStart; // DTSTART
 	int timeEnd; // DTEND
 	String uid;
