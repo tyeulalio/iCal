@@ -76,4 +76,17 @@ public class Event {
 	{
 		dateCreated = getDateTime();
 	}
+	
+	public void setTitle(String x) {
+		title = x;
+	}
+
+	public void setDescription(String x) {
+		description = x;
+	}
+
+	
+	public void setDateModified(String x) {
+		dateLastModified = x;
+	}
 }
