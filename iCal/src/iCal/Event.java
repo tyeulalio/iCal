@@ -19,6 +19,20 @@ public class Event {
 	String classType;
 	int location;
 	
+	   //////////////////////////////////////////////////////////////
+	   /// ** constructors ** 
+	   //////////////////////////////////////////////////////////////
+	   //////////////////////////////////////////////////////////////
+	public Event(String titlex, String descriptx, int dateStartx, int dateEndx, int timeStartx, int timeEndx) {
+		title = titlex;
+		description = descriptx;
+		dateStart = dateStartx;
+		dateEnd = dateEndx;
+		timeStart = timeStartx;
+		timeEnd = timeEndx;
+		String classType = "Public";
+	}
+	
 	// This method takes the current date and time and returns it
 	public static String getDateTime()
 	{
@@ -27,7 +41,7 @@ public class Event {
 	    return ( sdf.format(cal.getTime()) );
 	}
 	
-	// This method sets the current date and time as the date created 
+	// This method sets the current date and time to be the date created 
 	private static void setDateCreated(String s) 
 	{
 		dateCreated = getDateTime();
