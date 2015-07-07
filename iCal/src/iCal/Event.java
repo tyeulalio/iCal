@@ -8,12 +8,13 @@ import java.util.Scanner;
 public class Event {
 	String title;
 	String description;
-	String dateCreated; // CREATED
+	static String dateCreated; // CREATED
 	String dateLastModified; // LAST-MODIFIED
 	int dateStart; // DTSTART
 	int dateEnd; // DTEND
 	int timeStart; // DTSTART
 	int timeEnd; // DTEND
+	
 	String uid;
 	String classType;
 	int location;
@@ -26,4 +27,9 @@ public class Event {
 	    return ( sdf.format(cal.getTime()) );
 	}
 	
+	// This method sets the current date and time as the date created 
+	private static void setDateCreated(String s) 
+	{
+		dateCreated = getDateTime();
+	}
 }
