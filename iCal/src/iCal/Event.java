@@ -16,11 +16,12 @@ public class Event {
 	String classType;
 	int location;
 	
-	public static void getTime()
+	// This method takes the current date and time and returns it
+	public static String getDateTime()
 	{
 		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-	    System.out.println( sdf.format(cal.getTime()) );
+		SimpleDateFormat sdf = new SimpleDateFormat("HHmmsszz");
+	    return ( sdf.format(cal.getTime()) );
 	}
 	
 }
