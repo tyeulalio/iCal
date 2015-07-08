@@ -18,8 +18,11 @@ public class Event {
 	String uid;
 	String classType;
 	String location;
+	String filename;
 	
-	   //////////////////////////////////////////////////////////////
+	
+
+  //////////////////////////////////////////////////////////////
 	   /// ** constructors ** 
 	   //////////////////////////////////////////////////////////////
 	   //////////////////////////////////////////////////////////////
@@ -50,7 +53,7 @@ public class Event {
 	public static String getDateTime()
 	{
 		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyymmddHHmmsszz");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmsszz");
 	    return ( sdf.format(cal.getTime()) );
 	}
 	
@@ -77,6 +80,19 @@ public class Event {
 	public String getTimeEnd() {
 		return timeEnd;
 	}
+	
+  public String getClassType() {
+    return classType;  
+  }
+  
+  public String getLocation() {
+    return location;
+  }
+  
+  public String getFilename() {
+    return filename;
+  }
+
 	////////////////////////////////////////////////////////////////
 	// * mutator methods *
 	
@@ -114,4 +130,16 @@ public class Event {
 	public void setTimeEnd(String x) {
 		timeEnd = x;
 	}
+	
+	public void setClassType(String x) {
+	  classType = x;
+	}
+
+  public void setLocation(String x) {
+    location = x;
+  }
+  
+  public void setFilename(String x) {
+    filename = x;
+  }
 }
