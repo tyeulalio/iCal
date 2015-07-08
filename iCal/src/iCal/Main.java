@@ -10,10 +10,11 @@ import java.text.ParseException;
 public class Main {
 
   public static void main(String[] args) throws IOException {
-    writeIcs(gatherData());
+    //writeIcs(gatherData()); 
+	  
+	gatherData();
 
   }
-
 
   public static Event gatherData() throws IOException {
     Scanner scan = new Scanner(System.in);
@@ -91,10 +92,10 @@ public class Main {
     event1.setClassType(classification);
     
     //get a filename
-    scan.nextLine();
+    /*scan.nextLine();
     System.out.print("Enter a name for your .ics file(.ics will be appendded): ");
     String filename = scan.nextLine();
-    event1.setFilename(filename);
+    event1.setFilename(filename);*/
 
     // Used to test code
     System.out.println("\nTESTING BEGINS");
@@ -106,8 +107,8 @@ public class Main {
     System.out.printf("GEO:%.6f; %.6f\n", latitude, longitude);
     System.out.print("CLASS:" + classification + "\n");
 
-    //WriteFile test = new WriteFile(event1, "test.txt");
-    //test.writeToFile("Testing");
+    WriteFile test = new WriteFile(event1, "test.ics");
+    test.writeToFile("Testing");
 
     return event1;
   }
@@ -168,11 +169,12 @@ public class Main {
     return true;
   }
   
-  /**
+  
+  /** Commented out for now to check
    * Description: creates an ics file using the info from an Event Object
    * @author Scott Leung
    * @param Event e
-   */
+   *
   private static void writeIcs(Event e) throws IOException
   {
     PrintWriter pw = new PrintWriter(new FileWriter((e.getFilename() +".ics"), false));
@@ -204,7 +206,7 @@ public class Main {
     pw.println("LAST-MODIFIED:20150708T055519Z");//time stamp
     pw.println("LOCATION:" + e.getLocation());//location variable
     //pw.println("GEO:");/*need this for assignment requirement 
-    //(latitude; longitude, see RFC 3.8.1.6, must be in decimal fractions of degrees)*/
+    //(latitude; longitude, see RFC 3.8.1.6, must be in decimal fractions of degrees)
     pw.println("SEQUENCE:0");
     pw.println("STATUS:CONFIRMED");
     pw.println("SUMMARY;LANGUAGE=en-us:" + e.getTitle());//title
@@ -214,4 +216,6 @@ public class Main {
 
     pw.close();
   }
+  */
+  
 }
