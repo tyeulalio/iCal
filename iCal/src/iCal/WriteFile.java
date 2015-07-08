@@ -34,7 +34,13 @@ public class WriteFile {
 		FileWriter write = new FileWriter(path, true); //don't overwrite header with event = true
 		PrintWriter printLine = new PrintWriter(write);
 		
+		//Need to write timezone data
+		
+		//Start writing event data
 		printLine.println("SUMMARY:" + currentEvent.getTitle());
+		
+		//Need to close the Calendar Object after event data entered
+		printLine.printf("%s%s%n", "END:", Calendar.getName());
 		
 		printLine.close();
 	}
@@ -43,7 +49,12 @@ public class WriteFile {
 		FileWriter write2 = new FileWriter(path, append);
 		PrintWriter printLine2 = new PrintWriter(write2);
 		
-		printLine2.println("Header is working");
+		//begins the calendar object
+		printLine2.printf("%s%s%n", "BEGIN:", Calendar.getName());
+		printLine2.printf("%s%s%n", "PRODID:", Calendar.getProId());
+		printLine2.printf("%s%s%n", "VERSION:", Calendar.getVersion());
+		printLine2.printf("%s%s%n", "CALSCALE:", Calendar.getCalScale());
+		printLine2.printf("%s%s%n", "METHOD:", Calendar.getMethod());
 		
 		printLine2.close();
 	}

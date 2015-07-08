@@ -98,6 +98,7 @@ public class Main {
 		System.out.println("DTEND:" + event1.getTimeEnd());
 		System.out.printf("GEO:%.6f; %.6f\n", latitude, longitude);
 		System.out.print("CLASS:" + classification + "\n");
+		System.out.println("calName = " + Calendar.getName());
 		
 		WriteFile test = new WriteFile(event1, "test.ics");
 		test.writeToFile("Testing");
