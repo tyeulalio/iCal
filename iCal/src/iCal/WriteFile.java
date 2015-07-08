@@ -34,19 +34,11 @@ public class WriteFile {
 		FileWriter write = new FileWriter(path, true); //don't overwrite header with event = true
 		PrintWriter printLine = new PrintWriter(write);
 		
-		//Need to write timezone data
-		printLine.printf("%s%s%n", "BEGIN:", Timezone.getName());
-		printLine.printf("%s%s%n", "TZID:", Timezone.getTzid());
-		printLine.printf("%s%n", "BEGIN:STANDARD");
-		printLine.printf("%s%s%n", "DTSTART:", Timezone.getDtStart());
-		printLine.printf("%s%s%n", "TZOFFSETFROM:", Timezone.getOffSetFrom());
-		printLine.printf("%s%s%n", "TZOFFSETTO:", Timezone.getOffSetTo());
-		printLine.printf("%s%s%n", "TZNAME:", Timezone.getTzName());
-		printLine.printf("%s%n", "END:STANDARD");
-		printLine.printf("%s%s%n", "END:", Timezone.getName());
-		
 		//Start writing event data
-		printLine.println("SUMMARY:" + currentEvent.getTitle());
+		//maybe put a while loop here to work with multiple events
+		printLine.printf("%s%n", "BEGIN:VEVENT");
+		
+		
 		
 		//Need to close the Calendar Object after event data entered
 		printLine.printf("%s%s%n", "END:", Calendar.getName());
@@ -64,6 +56,17 @@ public class WriteFile {
 		printLine2.printf("%s%s%n", "VERSION:", Calendar.getVersion());
 		printLine2.printf("%s%s%n", "CALSCALE:", Calendar.getCalScale());
 		printLine2.printf("%s%s%n", "METHOD:", Calendar.getMethod());
+		
+		//Need to write timezone data
+		printLine2.printf("%s%s%n", "BEGIN:", Timezone.getName());
+		printLine2.printf("%s%s%n", "TZID:", Timezone.getTzid());
+		printLine2.printf("%s%n", "BEGIN:STANDARD");
+		printLine2.printf("%s%s%n", "DTSTART:", Timezone.getDtStart());
+		printLine2.printf("%s%s%n", "TZOFFSETFROM:", Timezone.getOffSetFrom());
+		printLine2.printf("%s%s%n", "TZOFFSETTO:", Timezone.getOffSetTo());
+		printLine2.printf("%s%s%n", "TZNAME:", Timezone.getTzName());
+		printLine2.printf("%s%n", "END:STANDARD");
+		printLine2.printf("%s%s%n", "END:", Timezone.getName());
 		
 		printLine2.close();
 	}
