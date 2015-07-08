@@ -3,15 +3,16 @@ package iCal;
 import java.util.Scanner;
 import java.text.SimpleDateFormat; 
 import java.text.ParseException;
+import java.io.IOException;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException{
 		gatherData();	
 		
 	}
 	
-	public static void gatherData(){
+	public static void gatherData() throws IOException{
 		Scanner scan= new Scanner(System.in);
 		Event event1 = new Event();
 		
@@ -98,9 +99,8 @@ public class Main {
 		System.out.printf("GEO:%.6f; %.6f\n", latitude, longitude);
 		System.out.print("CLASS:" + classification + "\n");
 		
-		WriteFile test = new WriteFile(event1, "test.txt");
+		WriteFile test = new WriteFile(event1, "test.ics");
 		test.writeToFile("Testing");
-		
 	}
 	
 	public static String checkValidTime(){
