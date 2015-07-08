@@ -1,18 +1,21 @@
 package iCal;
 
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
 public class Main {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     writeIcs(gatherData());
 
   }
 
 
-  public static Event gatherData() {
+  public static Event gatherData() throws IOException {
     Scanner scan = new Scanner(System.in);
     Event event1 = new Event();
 
@@ -73,7 +76,7 @@ public class Main {
     }
 
     // CLASS
-    String[] classes = { "public", "private", "confidential", "iana-token", "x-name" };
+    String[] classes = { "PUBLIC", "PRIVATE", "CONFIDENTIAL", "iana-token", "x-name" };
     System.out.println("Classify this event by entering a number from the list below:");
     int classInput = -1;
     while (classInput < 0 || classInput > 4) {
@@ -85,6 +88,13 @@ public class Main {
         System.out.println("Invalid input. Enter a number from the following list:");
     }
     String classification = classes[classInput];
+    event1.setClassType(classification);
+    
+    //get a filename
+    scan.nextLine();
+    System.out.print("Enter a name for your .ics file(.ics will be appendded): ");
+    String filename = scan.nextLine();
+    event1.setFilename(filename);
 
     // Used to test code
     System.out.println("\nTESTING BEGINS");
@@ -96,8 +106,8 @@ public class Main {
     System.out.printf("GEO:%.6f; %.6f\n", latitude, longitude);
     System.out.print("CLASS:" + classification + "\n");
 
-    WriteFile test = new WriteFile(event1, "test.txt");
-    test.writeToFile("Testing");
+    //WriteFile test = new WriteFile(event1, "test.txt");
+    //test.writeToFile("Testing");
 
     return event1;
   }
@@ -165,7 +175,7 @@ public class Main {
    */
   private static void writeIcs(Event e) throws IOException
   {
-    PrintWriter pw = new PrintWriter(new FileWriter("himalia.ics", false));
+    PrintWriter pw = new PrintWriter(new FileWriter((e.getFilename() +".ics"), false));
  
     //header info
     pw.println("BEGIN:VCALENDAR");
@@ -184,18 +194,21 @@ public class Main {
     pw.println("END:VTIMEZONE");
     //event info begin
     pw.println("BEGIN:VEVENT");
-    pw.println("CLASS:PUBLIC");//classification variable
+    pw.println("DTSTART:20150708T000000Z");//start time
+    pw.println("DTEND:20150708T010000Z");//end time
+    pw.println("DTSTAMP:20150708T055708Z");//time stamp
+    pw.println("UID:tb863cq76eqdncengt90o41ioo@google.com");//need unique id
+    pw.println("CLASS:" + e.getClassType());//classification 
     pw.println("CREATED:20150707T015617Z");//time stamp
-    pw.println("DTEND;TZID=\"Hawaiian Standard Time\":20150706T083000");//end time
-    pw.println("DTSTAMP:20150707T015617Z");//time stamp
-    pw.println("DTSTART;TZID=\"Hawaiian Standard Time\":20150706T080000");//start time
-    pw.println("LAST-MODIFIED:20150707T015617Z");//time stamp
-    pw.println("LOCATION:hamilton library");//location variable
-    pw.println("GEO:");/*need this for assignment requirement 
-    (latitude; longitude, see RFC 3.8.1.6, must be in decimal fractions of degrees)*/
+    pw.println("DESCRIPTION:" + e.getDescription());//description
+    pw.println("LAST-MODIFIED:20150708T055519Z");//time stamp
+    pw.println("LOCATION:" + e.getLocation());//location variable
+    //pw.println("GEO:");/*need this for assignment requirement 
+    //(latitude; longitude, see RFC 3.8.1.6, must be in decimal fractions of degrees)*/
     pw.println("SEQUENCE:0");
-    pw.println("SUMMARY;LANGUAGE=en-us:do stuff");//title
-    pw.println("UID:040000008200E00074C5B7101A82E00800000000C00D2A4075B2D");//need unique id
+    pw.println("STATUS:CONFIRMED");
+    pw.println("SUMMARY;LANGUAGE=en-us:" + e.getTitle());//title
+    pw.println("TRANSP:OPAQUE");
     pw.println("END:VEVENT");
     pw.println("END:VCALENDAR");
 
