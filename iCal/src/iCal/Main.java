@@ -181,7 +181,7 @@ public class Main {
   {
     //Pick a filename
     Scanner scan = new Scanner(System.in);
-    System.out.print("Enter a name for your .ics file(.ics will be appendded): ");
+    System.out.print("Enter a name for your .ics file(.ics will be appended): ");
     String filename = scan.nextLine();
     PrintWriter pw = new PrintWriter(new FileWriter((filename +".ics"), false));
  		
