@@ -6,20 +6,20 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Event {
-	String title;
-	String description;
-	static String dateCreated; // CREATED
-	String dateLastModified; // LAST-MODIFIED
-	String dateStart; // DTSTART
-	String dateEnd; // DTEND
-	String timeStart; // DTSTART
-	String timeEnd; // DTEND
+	static public String title;
+	static public String description;
+	static private String dateCreated; // CREATED
+	static private String dateLastModified; // LAST-MODIFIED
+	static public String dateStart; // DTSTART
+	static public String dateEnd; // DTEND
+	static public String timeStart; // DTSTART
+	static public String timeEnd; // DTEND
 	
-	String uid;
-	String classType;
-	String location;
-	String filename;
-	
+	static private String uuid;
+	static private String classType;
+	static private String location;
+	private float latitude = 0, longitude = 0;
+
 	
 
   //////////////////////////////////////////////////////////////
@@ -53,7 +53,7 @@ public class Event {
 	public static String getDateTime()
 	{
 		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmsszz");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmsszz");
 	    return ( sdf.format(cal.getTime()) );
 	}
 	
@@ -89,9 +89,26 @@ public class Event {
     return location;
   }
   
-  public String getFilename() {
-    return filename;
+  public String getDateStart() {
+  	return dateStart;
   }
+  
+  public String getDateEnd() {
+  	return dateEnd;
+  }
+  
+  public Float getLatitude(){
+  	return latitude;
+  }
+  
+  public Float getLongitude(){
+  	return longitude;
+  }
+  
+  public String getUUID(){
+  	return uuid;
+  }
+  
 
 	////////////////////////////////////////////////////////////////
 	// * mutator methods *
@@ -139,7 +156,15 @@ public class Event {
     location = x;
   }
   
-  public void setFilename(String x) {
-    filename = x;
+  public void setLongitude(Float x) {
+    longitude = x;
+  }
+  
+  public void setLatitude(Float x) {
+    latitude = x;
+  }
+  
+   public void setUUID(String x) {
+    uuid = x;
   }
 }
