@@ -12,49 +12,49 @@ import java.text.ParseException;
 public class Main {
 
   public static void main(String[] args) throws IOException {
-    writeIcs(gatherData()); 
-	  
-	//gatherData();
-
+    writeIcs(gatherData());
   }
 
+
+  // This method gathers data from the User
   public static Event gatherData() throws IOException {
     Scanner scan = new Scanner(System.in);
     Event event1 = new Event();
 
-    // event's title
+    // Event's title
     System.out.print("Enter the event's title: ");
     event1.setTitle(scan.nextLine());
 
-    // event's description
+    // Event's description
     System.out.print("Enter the event's description: ");
     event1.setDescription(scan.nextLine());
 
-    // event's start date
+    // Event's start date
     System.out.print("Enter the event's start date in the format YYYYMMDD: ");
     event1.setDateStart(checkValidDate());
 
-    // event's end date
+    // Event's end date
     System.out.print("Enter the event's end date in the format YYYYMMDD: ");
     event1.setDateEnd(checkValidDate());
 
-    // event's start time
+    // Event's start time
     System.out.print("Enter event's start time in 24 hr format (e.g. 4 pm = 1600): ");
     event1.setTimeStart(checkValidTime()); // calls method below to validate time entered is in correct format
 
-    // event's end time
+    // Event's end time
     System.out.print("Enter event's ending time in 24 hr format (e.g. 4 pm = 1600): ");
     event1.setTimeEnd(checkValidTime()); // calls method below to validate time entered is in correct format
 
-    // date modified
+    // Date modified
+    event1.setDateModified(event1.getDateTime());
 
     // UUID
+    // Randomly generates number here, followed by @Himalian.com
     UUID idOne = UUID.randomUUID();
     event1.setUUID(idOne.toString());
     
-    // put random number generator here, followed by @Himalian.com
-
-    // location
+    
+    // Location
     System.out.print("Enter event's location: ");
     event1.setLocation(scan.nextLine());
 
@@ -97,11 +97,8 @@ public class Main {
     String classification = classes[classInput];
     event1.setClassType(classification);
     
-    // Sets date last modified
-    event1.setDateModified(event1.getDateTime());
-    
-    // Used to test code
-    System.out.println("\nTESTING BEGINS");
+    // The Data gathered so far...
+    System.out.println("\nTESTING BEGINS...!");
     System.out.println("SUMMARY:" + event1.getTitle());
     System.out.println("DESCRIPTION:" + event1.getDescription());
     System.out.println("CREATED:" + event1.getDateCreated());
@@ -111,9 +108,6 @@ public class Main {
     System.out.printf("GEO:%.6f; %.6f\n", event1.getLatitude(), event1.getLongitude());
     System.out.print("CLASS:" + classification + "\n");
     System.out.println("UID:" + event1.getUUID() + "\n");
-
-    //WriteFile test = new WriteFile(event1, "test.ics");
-    //test.writeToFile("Testing");
 
     return event1;
   }
@@ -178,21 +172,20 @@ public class Main {
   
   
   
-  /** Commented out for now to check
-   * Description: creates an ics file using the info from an Event Object
+  /**
+   * Description: Creates an ics file using the data from an Event Object
    * @author Scott Leung
    * @param Event e
    */
   private static void writeIcs(Event event1) throws IOException
   {
-    //get a filename
+    //Pick a filename
     Scanner scan = new Scanner(System.in);
     System.out.print("Enter a name for your .ics file(.ics will be appendded): ");
     String filename = scan.nextLine();
-    
     PrintWriter pw = new PrintWriter(new FileWriter((filename +".ics"), false));
  		
-    //header info
+    //Header info
     pw.printf("%s%n", "BEGIN:VCALENDAR");
     pw.printf("%s%n", "PRODID:-//Team Himalia//iCalendar Assignment//EN");
     pw.printf("%s%n", "VERSION:2.0");
@@ -208,17 +201,17 @@ public class Main {
     pw.printf("%s%n", "END:STANDARD");
     pw.printf("%s%n", "END:VTIMEZONE");
     
-    //event info begin
+    //Event info begin
     pw.printf("%s%n", "BEGIN:VEVENT");
     pw.printf("%s%s%s%s%s%n", "DTSTART:", event1.getDateStart(), "T", event1.getTimeStart(), "00");//start time
     pw.printf("%s%s%s%s%s%n", "DTEND:", event1.getDateEnd(), "T", event1.getTimeEnd(), "00");//end time
     pw.printf("%s%s%n", "DTSTAMP:", event1.getDateCreated());//time stamp
     pw.printf("%s%n", "UID:" + event1.getUUID() + "@Himalia.com");//need unique id
     pw.printf("%s%s%n", "CLASS:", event1.getClassType());//classification 
-    pw.printf("%s%n", "CREATED:" + event1.getDateCreated());//20150707T015617");//time stamp
-    
+    pw.printf("%s%n", "CREATED:" + event1.getDateCreated());//time created stamp
+  
     pw.printf("%s%s%n", "DESCRIPTION:", event1.getDescription());//description
-    pw.printf("%s%s%n", "LAST-MODIFIED:", event1.getDateModified());//time stamp
+    pw.printf("%s%s%n", "LAST-MODIFIED:", event1.getDateModified());//time modified stamp
     pw.printf("%s%s%n", "LOCATION:", event1.getLocation());//location variable
     pw.printf("%s%.6f;%.6f%n", "GEO:", event1.getLatitude(), event1.getLongitude());//need this for assignment requirement 
     //pw.printf("%s%n", "SEQUENCE:0");
