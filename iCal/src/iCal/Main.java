@@ -53,7 +53,6 @@ public class Main {
     UUID idOne = UUID.randomUUID();
     event1.setUUID(idOne.toString());
     
-    
     // Location
     System.out.print("Enter event's location: ");
     event1.setLocation(scan.nextLine());
