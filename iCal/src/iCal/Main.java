@@ -12,15 +12,43 @@ import java.text.ParseException;
 public class Main {
 
   public static void main(String[] args) throws IOException {
-    writeIcs(gatherData());
+    EventLinkedList<Event> cal = new EventLinkedList<Event>();
+    cal.add(gatherData());
+    cal.add(gatherData());
+
+
+    //writeIcs(gatherData());
   }
 
-
+  // UI
+  public static void displayMenu() throws IOException {
+    Scanner keyboard = new Scanner(System.in);;
+    System.out.print("Welcome! Would you like to" +
+                      "1) Create an event file\n" +
+                      "2) Import .ics files to calendar\n" +
+                      "3) Quit\n");
+    int choice = keyboard.next().charAt(0);
+    
+    
+    // Creates an event
+    if (choice==1) {
+      //Gathers data for the new event
+      writeIcs(gatherData());
+    }
+    
+    else if (choice==2) {}
+    else if (choice==3) {
+      System.out.print("Have a nice day.");
+    }
+    else {}
+  }
+  
+  
+  
   // This method gathers data from the User
   public static Event gatherData() throws IOException {
     Scanner scan = new Scanner(System.in);
-    Event event1 = new Event();
-
+    Event event1 = new Event();    
     // Event's title
     System.out.print("Enter the event's title: ");
     event1.setTitle(scan.nextLine());
@@ -48,8 +76,7 @@ public class Main {
     // Date modified
     event1.setDateModified(event1.getDateTime());
 
-    // UUID
-    // Randomly generates number here, followed by @Himalian.com
+    // UUID (Randomly generates number here, followed by @Himalian.com)
     UUID idOne = UUID.randomUUID();
     event1.setUUID(idOne.toString());
     
@@ -80,6 +107,7 @@ public class Main {
     }
     // Lat must range from 0-90
     // Lon must range from 0-180
+    
 
     // CLASS
     String[] classes = { "PUBLIC", "PRIVATE", "CONFIDENTIAL", "iana-token", "x-name" };
@@ -107,6 +135,11 @@ public class Main {
     System.out.printf("GEO:%.6f; %.6f\n", event1.getLatitude(), event1.getLongitude());
     System.out.print("CLASS:" + classification + "\n");
     System.out.println("UID:" + event1.getUUID() + "\n");
+    //System.out.println("COMMENT:" + event1.getComment() + "\n");
+    
+   // THESE 2 LINES OF CODE ALLOW FOR READING FILE***
+    ReadFile read = new ReadFile("final2.ics");
+    read.ReadFile();
 
     return event1;
   }
@@ -210,6 +243,7 @@ public class Main {
     pw.printf("%s%n", "CREATED:" + event1.getDateCreated());//time created stamp
   
     pw.printf("%s%s%n", "DESCRIPTION:", event1.getDescription());//description
+  //pw.printf("%s%S%n", "COMMENT:", event1.getComment()); //comment   
     pw.printf("%s%s%n", "LAST-MODIFIED:", event1.getDateModified());//time modified stamp
     pw.printf("%s%s%n", "LOCATION:", event1.getLocation());//location variable
     pw.printf("%s%.6f;%.6f%n", "GEO:", event1.getLatitude(), event1.getLongitude());//need this for assignment requirement 

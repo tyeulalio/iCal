@@ -4,22 +4,24 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Comparator;
 
-public class Event {
-	static public String title;
-	static public String description;
-	static private String dateCreated; // CREATED
-	static private String dateLastModified; // LAST-MODIFIED
-	static public String dateStart; // DTSTART
-	static public String dateEnd; // DTEND
-	static public String timeStart; // DTSTART
-	static public String timeEnd; // DTEND
+public class Event implements Comparator<Event>{
+	public String title; //SUMMARY
+	public String description;
+	//static public String comment; // COMMENT
+	private static String dateCreated; // CREATED
+	private String dateLastModified; // LAST-MODIFIED
+	public String dateStart; // DTSTART
+	public String dateEnd; // DTEND
+	public String timeStart; // DTSTART
+	public String timeEnd; // DTEND
 	
-	static private String uuid;
-	static private String classType;
-	static private String location;
+	private String uuid;
+	private String classType;
+	private String location;
 	private float latitude = 0, longitude = 0;
-
+	public String comment;
 	
 
   //////////////////////////////////////////////////////////////
@@ -29,6 +31,7 @@ public class Event {
 	public Event() {
 		title = "";
 		description = "";
+		comment = "";
 		String classType = "Public";
 		dateCreated = getDateTime();
 	}
@@ -40,6 +43,7 @@ public class Event {
 		dateEnd = dateEndx;
 		timeStart = timeStartx;
 		timeEnd = timeEndx;
+		//comment = commentx;
 		String classType = "Public";
 	}
 	
@@ -64,6 +68,10 @@ public class Event {
 	public String getDescription() {
 		return description;
 	}
+	
+	//public String getComment() {
+	//	return comment;
+	//}
 	
 	public String getDateCreated() {
 		return dateCreated;
@@ -126,8 +134,11 @@ public class Event {
 	public void setDescription(String x) {
 		description = x;
 	}
-
 	
+	//public void setComment(String x) {
+	//	comment = x;
+	//}
+
 	public void setDateModified(String x) {
 		dateLastModified = x;
 	}
@@ -167,4 +178,22 @@ public class Event {
    public void setUUID(String x) {
     uuid = x;
   }
+  
+  @Override
+  public String toString() {
+    return "Title: " + title + " Date: " + dateStart + " Time: " + timeStart;
+  }
+
+  /**
+   * compares the date and start time of two events
+   * @param Event e1
+   * @param Event e2
+   * @return int 0 if equal, negative if e1 < e2, positive if e1 > e2
+   */
+  public int compare(Event e1, Event e2) {
+    String str1 = e1.getDateStart() + e1.getTimeStart();
+    String str2 = e2.getDateStart() + e2.getTimeStart();
+    return str1.compareToIgnoreCase(str2);
+  }
+
 }
