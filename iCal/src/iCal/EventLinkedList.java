@@ -74,6 +74,7 @@ public class EventLinkedList<E> {
     return size;
   }
   
+  
   /**
    * returns a string representation of the list
    * @author Data Structures by Koffman and Wolfgang
@@ -85,7 +86,7 @@ public class EventLinkedList<E> {
     while (!nodeRef.equals(tail)) {
       result.append(nodeRef.data);
       if (!nodeRef.next.equals(tail)) {
-        result.append(" <==> ");
+        result.append(" \n");
       }
       nodeRef = nodeRef.next;
     }
@@ -106,6 +107,29 @@ public class EventLinkedList<E> {
         compNode = compNode.prev;
       }
       compNode.data = nextVal;
+      node = node.next;
+    }
+  }
+  
+  /**
+   * calculates the great circle distance between two events 
+   */
+  public void calcGCD() {
+    DLinkedNode<Event> node = (DLinkedNode<Event>) head.next;
+    while(!node.next.equals(tail)) {
+      if(node.data.getDateStart().equals(node.next.data.getDateStart())) {
+        Double lat1 = (double) node.data.getLatitude();
+        Double long1 = (double) node.data.getLongitude();
+        Double lat2 = (double) node.next.data.getLatitude();
+        Double long2 = (double) node.next.data.getLongitude();
+        if(lat1 != null && long1 != null && lat2 != null && long2 != null) {
+          float miles, km;
+          miles = (float) (3963 * Math.acos(Math.cos(lat1) * Math.cos(lat2) * Math.cos(long1 - long2) + Math.sin(lat1) * Math.sin(lat2)));
+          km = (float) (miles * 1.60934);
+          
+          node.data.setComment("The great circle distance to your next event is " + miles + " miles(or " + km + "km).");    
+        }
+      }
       node = node.next;
     }
   }

@@ -85,10 +85,15 @@ public static void displayMenu() throws IOException {
           Event test1 = new Event ("Test title", "Test descript", "20150714", "20150714", "140000", "143000", 22, 114);
           Event test2 = new Event ("Test title", "Test descript", "20150714", "20150714", "150000", "153000", 9, 7);
           Event test3 = new Event ("Test title", "Test descript", "20150714", "20150714", "160000", "153000", 9, 7);
+          
+          System.out.println("Adding three events to cal");
           cal.add(test1);
           cal.add(test3);
           cal.add(test2);
+          System.out.println("Sorting cal");
           cal.insertionSort(c);
+          System.out.println("Calculating GCD...");
+          cal.calcGCD();
           System.out.println(cal);
         }
         

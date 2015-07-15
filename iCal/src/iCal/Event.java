@@ -11,7 +11,7 @@ public class Event implements Comparator<Event>{
 	public String description;
 	//static public String comment; // COMMENT
 	private static String dateCreated; // CREATED
-	private String dateLastModified; // LAST-MODIFIED
+	private String dtstamp; // LAST-MODIFIED
 	public String dateStart; // DTSTART
 	public String dateEnd; // DTEND
 	public String timeStart; // DTSTART
@@ -20,8 +20,9 @@ public class Event implements Comparator<Event>{
 	private String uuid;
 	private String classType;
 	private String location;
-	private float latitude = 0, longitude = 0;
+	private float latitude, longitude;
 	public String comment;
+	private String tzid;
 	
 
   //////////////////////////////////////////////////////////////
@@ -36,15 +37,19 @@ public class Event implements Comparator<Event>{
 		dateCreated = getDateTime();
 	}
 	
-	public Event(String titlex, String descriptx, String dateStartx, String dateEndx, String timeStartx, String timeEndx) {
+	public Event(String titlex, String descriptx, String dateStartx, 
+				String dateEndx, String timeStartx, String timeEndx,
+				float longx, float latx) {
 		title = titlex;
 		description = descriptx;
 		dateStart = dateStartx;
 		dateEnd = dateEndx;
 		timeStart = timeStartx;
 		timeEnd = timeEndx;
-		//comment = commentx;
+		comment = "";
 		String classType = "Public";
+		longitude = longx;
+		latitude = latx;
 	}
 	
    //////////////////////////////////////////////////////////////
@@ -77,8 +82,8 @@ public class Event implements Comparator<Event>{
 		return dateCreated;
 	}
 	
-	public String getDateModified() {
-		return dateLastModified;
+	public String getDtstamp() {
+		return dtstamp;
 	}
 	
 	public String getTimeStart() {
@@ -117,14 +122,23 @@ public class Event implements Comparator<Event>{
   	return uuid;
   }
   
+  public String getTzid(){
+  	return tzid;
+  }
+  
 
 	////////////////////////////////////////////////////////////////
 	// * mutator methods *
 	
 	// This method sets the current date and time to be the date created 
-	private static void setDateCreated(String s) 
+	public static void setDateCreated(String s) 
 	{
-		dateCreated = getDateTime();
+		if (s != null){
+			dateCreated = s;
+		}
+		else {
+			dateCreated = getDateTime();
+		}
 	}
 	
 	public void setTitle(String x) {
@@ -135,20 +149,20 @@ public class Event implements Comparator<Event>{
 		description = x;
 	}
 	
-	//public void setComment(String x) {
-	//	comment = x;
-	//}
+	public void setComment(String x) {
+		comment = x;
+	}
 
-	public void setDateModified(String x) {
-		dateLastModified = x;
+	public void setDtstamp(String x) {
+		dtstamp = x;
 	}
 	
 	public void setDateStart(String x) {
-		dateStart = x;
+		dateStart = x + "00";
 	}
 	
 	public void setDateEnd(String x) {
-		dateEnd = x;
+		dateEnd = x + "00";
 	}
 	
 	public void setTimeStart(String x) {
@@ -179,9 +193,13 @@ public class Event implements Comparator<Event>{
     uuid = x;
   }
   
+  public void setTzid(String x){
+	   tzid = x;
+   }
+  
   @Override
   public String toString() {
-    return "Title: " + title + " Date: " + dateStart + " Time: " + timeStart;
+    return "Title: " + title + " \tDate: " + dateStart + " \tTime: " + timeStart + " \nComment: " + comment;
   }
 
   /**
