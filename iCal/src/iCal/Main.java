@@ -14,19 +14,7 @@ public class Main {
 
   public static void main(String[] args) throws IOException {
     displayMenu();
-    
-    /*
-    //for testing the linked list. it works.:)
-    EventLinkedList<Event> cal = new EventLinkedList<Event>();
-    Comparator c = (Comparator) new Event();
-    
-    cal.add(gatherData());
-    cal.insertionSort(c);
-    cal.add(gatherData());
-    cal.insertionSort(c);
-    System.out.println(cal);
-    */
-  }
+   }
 
 public static void displayMenu() throws IOException {
   // Creates a (linked list) called 'cal' to store events
@@ -99,7 +87,7 @@ public static void displayMenu() throws IOException {
           System.out.println(cal);
         }
         
-        // . Quit program  
+        // 10. Quit program  
         else if (choice.equalsIgnoreCase("Quit") || choice.equals("10")) {
           System.out.print("Have a nice day.");
         }
@@ -394,6 +382,7 @@ public static void displayMenu() throws IOException {
       for (int i = 0; i < classes.length; i++) {
         System.out.println(i + " = " + classes[i]);
       }
+      System.out.print(": "); // just to look nicer
       classInput = scan.nextInt();
       if (classInput < 0 || classInput > 4)
         System.out.println("Invalid input. Enter a number from the following list:");
@@ -509,7 +498,7 @@ public static void displayMenu() throws IOException {
     //Event info begin
     pw.printf("%s%n", "BEGIN:VEVENT");
     pw.printf("%s%s%s%s%n", "DTSTART:", event1.getDateStart(), "T", event1.getTimeStart());//start time
-    pw.printf("%s%s%s%s%s%n", "DTEND:", event1.getDateEnd(), "T", event1.getTimeEnd());//end time
+    pw.printf("%s%s%s%s%n", "DTEND:", event1.getDateEnd(), "T", event1.getTimeEnd());//end time
     pw.printf("%s%s%n", "DTSTAMP:", event1.getDateCreated());//time stamp
     pw.printf("%s%n", "UID:" + event1.getUUID() + "@Himalia.com");//need unique id
     pw.printf("%s%s%n", "CLASS:", event1.getClassType());//classification 
