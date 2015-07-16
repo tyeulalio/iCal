@@ -7,21 +7,19 @@ import java.util.Scanner;
 import java.util.Comparator;
 
 public class Event implements Comparator<Event>{
-	public String title; //SUMMARY
-	public String description;
-	//static public String comment; // COMMENT
+	private String title; //SUMMARY
+	private String description;
+	private static String comment; // COMMENT
 	private static String dateCreated; // CREATED
 	private String dtstamp; // LAST-MODIFIED
-	public String dateStart; // DTSTART
-	public String dateEnd; // DTEND
-	public String timeStart; // DTSTART
-	public String timeEnd; // DTEND
-	
+	private String dateStart; // DTSTART
+	private String dateEnd; // DTEND
+	private String timeStart; // DTSTART
+	private String timeEnd; // DTEND
 	private String uuid;
 	private String classType;
 	private String location;
 	private float latitude, longitude;
-	public String comment;
 	private String tzid;
 	
 
@@ -194,12 +192,12 @@ public class Event implements Comparator<Event>{
   }
   
   public void setTzid(String x){
-	   tzid = x;
-   }
+	tzid = x;
+  }
   
   @Override
   public String toString() {
-    return "Title: " + title + " \tDate: " + dateStart + " \tTime: " + timeStart + " \nComment: " + comment;
+    return "Title:\t" + title + " \t\tDate:\t" + dateStart + " \tTime:\t" + timeStart + "\n\t\t\tComment: " + comment;
   }
 
   /**
