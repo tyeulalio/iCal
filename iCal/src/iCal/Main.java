@@ -48,7 +48,7 @@ public static void displayMenu() throws IOException {
         
         // 2. Import an event file
         else if (choice.equalsIgnoreCase("Import") || choice.equals("2")) {
-             System.out.println("Please enter the name of your file (Do not include .ics/): ");
+             System.out.println("Please enter the name of your file (Do not include .ics): ");
              String fileName = keyboard.nextLine();
              // check if input contains .ics at the end
              // int fileNameLength = fileName.length();
@@ -63,16 +63,17 @@ public static void displayMenu() throws IOException {
       	    
       	  // The next 3 lines are being used to test ReadFile
       	  cal.insertionSort(c);
-      	  System.out.println("ReadFile being tested:");
+      	  cal.calcGCD();
+      	  System.out.println("\nEvent imported. Here's your updated calendar:\n");
           System.out.println(cal);
         }
          
         // 3. Tests
         if (choice.equalsIgnoreCase("Test") || choice.equals("3")) {
           //Event(String titlex, String descriptx, String dateStartx, String dateEndx, String timeStartx, String timeEndx) {
-          Event test1 = new Event ("Test title", "Test descript", "20150714", "20150714", "140000", "143000", 22, 114);
-          Event test2 = new Event ("Test title", "Test descript", "20150714", "20150714", "150000", "153000", 9, 7);
-          Event test3 = new Event ("Test title", "Test descript", "20150714", "20150714", "160000", "153000", 9, 7);
+          Event test1 = new Event ("Work", "Not fun", "20150714", "20150714", "140000", "143000", 22, 114);
+          Event test2 = new Event ("Study ICS 314", "Because I need to", "20150714", "20150714", "150000", "153000", 9, -7);
+          Event test3 = new Event ("Dinner Party", "Kev's Birthday", "20150714", "20150714", "160000", "153000", -19, 70);
           
           cal.add(test1);
           cal.add(test3);
@@ -376,13 +377,13 @@ public static void displayMenu() throws IOException {
 
     // CLASS
     String[] classes = { "PUBLIC", "PRIVATE", "CONFIDENTIAL", "iana-token", "x-name" };
-    System.out.println("Classify this event by entering a number from the list below:");
+    System.out.print("\n");
     int classInput = -1;
     while (classInput < 0 || classInput > 4) {
       for (int i = 0; i < classes.length; i++) {
         System.out.println(i + " = " + classes[i]);
       }
-      System.out.print(": "); // just to look nicer
+      System.out.print("Classify this event by entering a number from the list above: "); // 
       classInput = scan.nextInt();
       if (classInput < 0 || classInput > 4)
         System.out.println("Invalid input. Enter a number from the following list:");
@@ -391,7 +392,7 @@ public static void displayMenu() throws IOException {
     event1.setClassType(classification);
     
     // The Data gathered so far...
-    System.out.println("\nNew event summary:");
+    System.out.println("\n=======New event was created ====:");
     System.out.println("SUMMARY:" + event1.getTitle());
     System.out.println("DESCRIPTION:" + event1.getDtstamp());
     System.out.println("CREATED:" + event1.getDateCreated());
@@ -402,6 +403,7 @@ public static void displayMenu() throws IOException {
     System.out.print("CLASS:" + classification + "\n");
     System.out.println("UID:" + event1.getUUID() + "\n");
     //System.out.println("COMMENT:" + event1.getComment() + "\n");
+    System.out.println("\n=================================:");
 
     return event1;
   }
