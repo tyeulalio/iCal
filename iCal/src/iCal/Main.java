@@ -2,6 +2,7 @@ package iCal;
 
 import java.util.Scanner;
 import java.util.UUID;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,7 +13,8 @@ import java.util.Comparator;
 
 public class Main {
 
-  public static void main(String[] args) throws IOException {
+  private static Scanner scan;
+public static void main(String[] args) throws IOException {
     displayMenu();
    }
 
@@ -22,17 +24,19 @@ public static void displayMenu() throws IOException {
   Comparator c = (Comparator) new Event();
   String choice = "";
   
-  System.out.print("Welcome! ");
+  System.out.print("Welcome!\n");
   // Displays menu of options
   do {
 	  Scanner keyboard = new Scanner(System.in);
-	  if (!(choice.equalsIgnoreCase("Quit") || choice.equals("3"))) {
-		  System.out.print("\nType the number or the capitalized word to choose from below:\n" +
-	              "1) CREATE an event file and add to calendar\n" +
-	              "2) IMPORT .ics files to calendar\n" +
-	              "3) TEST \n" +
-	              "4) VIEW calendar\n" +
-	              "10) QUIT\n: ");
+	  if (!(choice.equalsIgnoreCase("Quit") || choice.equals("10"))) {
+			System.out.print("################  MENU: ################\n" +
+	              "1)  CREATE an event file & add to calendar\n" +
+	              "2)  IMPORT .ics file to calendar\n" +
+	              "3)  TEST \n" +
+	              "4)  VIEW calendar\n" +
+	              "10) QUIT"
+	              + "\n\nChoose from the menu above by typing the number\n"
+	              + "or the capitalized word, then pressing enter: ");
 	  }
 		  
     try {
@@ -44,11 +48,12 @@ public static void displayMenu() throws IOException {
             new1 = gatherData();
             writeIcs(new1);
             cal.add(new1);
+            cal.calcGCD();
         }
         
         // 2. Import an event file
         else if (choice.equalsIgnoreCase("Import") || choice.equals("2")) {
-             System.out.println("Please enter the name of your file (Do not include .ics): ");
+             System.out.print("Please enter the name of your file (Do not include .ics)\n: ");
              String fileName = keyboard.nextLine();
              // check if input contains .ics at the end
              // int fileNameLength = fileName.length();
@@ -56,36 +61,35 @@ public static void displayMenu() throws IOException {
              if (fileNameEnding.equals(".ics")) 
             	  fileName = fileName.substring(0,fileName.length()-4);
               // append .ics to end of fileName
-             fileName += ".ics";
+             String fullFileName = fileName + ".ics";
         	
-        	  ReadFile read = new ReadFile(fileName, cal);
+        	  ReadFile read = new ReadFile(fullFileName, cal);
         	  read.ReadFile();
-      	    
-      	  // The next 3 lines are being used to test ReadFile
-      	  cal.insertionSort(c);
-      	  cal.calcGCD();
-      	  System.out.println("\nEvent imported. Here's your updated calendar:\n");
-          System.out.println(cal);
+
+        	  // The next 3 lines are being used to test ReadFile
+        	  cal.insertionSort(c);
+        	  cal.calcGCD();
+        	  printCal(cal);
         }
          
         // 3. Tests
-        if (choice.equalsIgnoreCase("Test") || choice.equals("3")) {
+        else if (choice.equalsIgnoreCase("Test") || choice.equals("3")) {
           //Event(String titlex, String descriptx, String dateStartx, String dateEndx, String timeStartx, String timeEndx) {
-          Event test1 = new Event ("Work", "Not fun", "20150714", "20150714", "140000", "143000", 22, 114);
-          Event test2 = new Event ("Study ICS 314", "Because I need to", "20150714", "20150714", "150000", "153000", 9, -7);
-          Event test3 = new Event ("Dinner Party", "Kev's Birthday", "20150714", "20150714", "160000", "153000", -19, 70);
+          Event test1 = new Event ("Work", "Not fun", "20150714", "20150714", "140000", "143000", 22, 114, "testing1");
+          Event test2 = new Event ("Study ICS 314", "Because I need to", "20150714", "20150714", "150000", "153000", 9, -7, "testing2");
+          Event test3 = new Event ("Dinner Party", "Kev's Birthday", "20150714", "20150714", "160000", "153000", -19, 70, "testing3");
           
           cal.add(test1);
           cal.add(test3);
           cal.add(test2);
           cal.insertionSort(c);
           cal.calcGCD();
-          System.out.println(cal);
+          printCal(cal);
         }
         
         // 4. View calendar linked list
-        if (choice.equalsIgnoreCase("Test") || choice.equals("4")) {
-          System.out.println(cal);
+        else if (choice.equalsIgnoreCase("View") || choice.equals("4")) {
+        	printCal(cal);
         }
         
         // 10. Quit program  
@@ -95,12 +99,10 @@ public static void displayMenu() throws IOException {
     }
     catch (Exception e) {
   	  // Error message
-  	  System.out.println("Some kind of error occurred. Press Return to continue.");
-  	  keyboard.nextLine();                   // Clear the input buffer
-    
+  	  System.out.println("Some kind of error occurred. (Press Return to continue.)");
+  	  keyboard.next();                   // Clear the input buffer    
     }
     finally {
-
     }
   } while (!(choice.equalsIgnoreCase("Quit")) && !(choice.equals("10")));
     
@@ -376,6 +378,7 @@ public static void displayMenu() throws IOException {
     
 
     // CLASS
+    System.out.print("\nEvent classification types: (Public is default)"); //
     String[] classes = { "PUBLIC", "PRIVATE", "CONFIDENTIAL", "iana-token", "x-name" };
     System.out.print("\n");
     int classInput = -1;
@@ -392,19 +395,21 @@ public static void displayMenu() throws IOException {
     event1.setClassType(classification);
     
     // The Data gathered so far...
-    System.out.println("\n=======New event was created ====:");
+    System.out.println("\n=======New event was created ====");
     System.out.println("SUMMARY:" + event1.getTitle());
-    System.out.println("DESCRIPTION:" + event1.getDtstamp());
+    System.out.println("DESCRIPTION:" + event1.getDescription());
     System.out.println("CREATED:" + event1.getDateCreated());
     System.out.println("Last Modified:" + event1.getDtstamp());
     System.out.println("DTSTART:" + event1.getTimeStart());
     System.out.println("DTEND:" + event1.getTimeEnd());
     System.out.printf("GEO:%.6f; %.6f\n", event1.getLatitude(), event1.getLongitude());
     System.out.print("CLASS:" + classification + "\n");
-    System.out.println("UID:" + event1.getUUID() + "\n");
-    //System.out.println("COMMENT:" + event1.getComment() + "\n");
-    System.out.println("\n=================================:");
-
+    System.out.print("UID:" + event1.getUUID() + "@Himalia.com\n");
+    //System.out.println("COMMENT:" + event1.getComment());
+    System.out.println("=================================");
+    
+    pickFilename(event1);
+    
     return event1;
   }
 
@@ -475,50 +480,79 @@ public static void displayMenu() throws IOException {
    */
   private static void writeIcs(Event event1) throws IOException
   {
-    //Pick a filename
-    Scanner scan = new Scanner(System.in);
-    System.out.print("Enter a name for your .ics file(.ics will be appended): ");
-    String filename = scan.nextLine();
-    PrintWriter pw = new PrintWriter(new FileWriter((filename +".ics"), false));
- 		
-    //Header info
-    pw.printf("%s%n", "BEGIN:VCALENDAR");
-    pw.printf("%s%n", "PRODID:-//Team Himalia//iCalendar Assignment//EN");
-    pw.printf("%s%n", "VERSION:2.0");
-    pw.printf("%s%n", "CALSCALE:GREGORIAN");
-    pw.printf("%s%n", "METHOD:PUBLISH");
-    pw.printf("%s%n", "BEGIN:VTIMEZONE");
-    pw.printf("%s%n", "TZID:Pacific/Honolulu");
-    pw.printf("%s%n", "BEGIN:STANDARD");
-    pw.printf("%s%n", "DTSTART:19700101T000000");
-    pw.printf("%s%n", "TZOFFSETFROM:-1000");
-    pw.printf("%s%n", "TZOFFSETTO:-1000");
-    pw.printf("%s%n", "TZNAME:HST");
-    pw.printf("%s%n", "END:STANDARD");
-    pw.printf("%s%n", "END:VTIMEZONE");
+    	PrintWriter pw = new PrintWriter(new FileWriter((event1.getFilename() +".ics"), false));
+	 		
+	    //Header info
+	    pw.printf("%s%n", "BEGIN:VCALENDAR");
+	    pw.printf("%s%n", "PRODID:-//Team Himalia//iCalendar Assignment//EN");
+	    pw.printf("%s%n", "VERSION:2.0");
+	    pw.printf("%s%n", "CALSCALE:GREGORIAN");
+	    pw.printf("%s%n", "METHOD:PUBLISH");
+	    pw.printf("%s%n", "BEGIN:VTIMEZONE");
+	    pw.printf("%s%n", "TZID:Pacific/Honolulu");
+	    pw.printf("%s%n", "BEGIN:STANDARD");
+	    pw.printf("%s%n", "DTSTART:19700101T000000");
+	    pw.printf("%s%n", "TZOFFSETFROM:-1000");
+	    pw.printf("%s%n", "TZOFFSETTO:-1000");
+	    pw.printf("%s%n", "TZNAME:HST");
+	    pw.printf("%s%n", "END:STANDARD");
+	    pw.printf("%s%n", "END:VTIMEZONE");
+	    
+	    //Event info begin
+	    pw.printf("%s%n", "BEGIN:VEVENT");
+	    pw.printf("%s%s%s%s%n", "DTSTART:", event1.getDateStart(), "T", event1.getTimeStart());//start time
+	    pw.printf("%s%s%s%s%n", "DTEND:", event1.getDateEnd(), "T", event1.getTimeEnd());//end time
+	    pw.printf("%s%s%n", "DTSTAMP:", event1.getDateCreated());//time stamp
+	    pw.printf("%s%n", "UID:" + event1.getUUID() + "@Himalia.com");//need unique id
+	    pw.printf("%s%s%n", "CLASS:", event1.getClassType());//classification 
+	    pw.printf("%s%n", "CREATED:" + event1.getDateCreated());//time created stamp
+	  
+	    pw.printf("%s%s%n", "DESCRIPTION:", event1.getDescription());//description
+	    //pw.printf("%s%S%n", "COMMENT:", event1.getComment()); //comment   
+	    //pw.printf("%s%s%n", "LAST-MODIFIED:", event1.getDateModified());//time modified stamp -- we don't need last-modified, same as dtstamp
+	    pw.printf("%s%s%n", "LOCATION:", event1.getLocation());//location variable
+	    pw.printf("%s%.6f;%.6f%n", "GEO:", event1.getLatitude(), event1.getLongitude());//need this for assignment requirement 
+	    //pw.printf("%s%n", "SEQUENCE:0");
+	    //pw.printf("%s%n", "STATUS:CONFIRMED");
+	    pw.printf("%s%s%n", "SUMMARY:", event1.getTitle());//title
+	    //pw.printf("%s%n", "TRANSP:OPAQUE");
+	    pw.printf("%s%n", "END:VEVENT");
+	    pw.printf("%s%n", "END:VCALENDAR");
+	    System.out.println("Finished saving to file!");
+	    pw.close();
     
-    //Event info begin
-    pw.printf("%s%n", "BEGIN:VEVENT");
-    pw.printf("%s%s%s%s%n", "DTSTART:", event1.getDateStart(), "T", event1.getTimeStart());//start time
-    pw.printf("%s%s%s%s%n", "DTEND:", event1.getDateEnd(), "T", event1.getTimeEnd());//end time
-    pw.printf("%s%s%n", "DTSTAMP:", event1.getDateCreated());//time stamp
-    pw.printf("%s%n", "UID:" + event1.getUUID() + "@Himalia.com");//need unique id
-    pw.printf("%s%s%n", "CLASS:", event1.getClassType());//classification 
-    pw.printf("%s%n", "CREATED:" + event1.getDateCreated());//time created stamp
-  
-    pw.printf("%s%s%n", "DESCRIPTION:", event1.getDescription());//description
-    //pw.printf("%s%S%n", "COMMENT:", event1.getComment()); //comment   
-    //pw.printf("%s%s%n", "LAST-MODIFIED:", event1.getDateModified());//time modified stamp -- we don't need last-modified, same as dtstamp
-    pw.printf("%s%s%n", "LOCATION:", event1.getLocation());//location variable
-    pw.printf("%s%.6f;%.6f%n", "GEO:", event1.getLatitude(), event1.getLongitude());//need this for assignment requirement 
-    //pw.printf("%s%n", "SEQUENCE:0");
-    //pw.printf("%s%n", "STATUS:CONFIRMED");
-    pw.printf("%s%s%n", "SUMMARY:", event1.getTitle());//title
-    //pw.printf("%s%n", "TRANSP:OPAQUE");
-    pw.printf("%s%n", "END:VEVENT");
-    pw.printf("%s%n", "END:VCALENDAR");
-    System.out.println("Finished saving to file!");
-    pw.close();
   }
-
+  
+  public static boolean isFilenameValid(String file) {
+	  File f = new File(file);
+	  try {
+	    f.getCanonicalPath();
+	    return true;
+	  } 
+	  catch (IOException e) {
+	    return false;
+	  }
+	}
+  
+  //Pick a filename
+  public static String pickFilename(Event e){
+	    System.out.print("Enter a name for your .ics file(.ics will be appended): ");
+	    String filename = null;
+	    scan = new Scanner(System.in);
+	    do {
+	    	filename = scan.nextLine();
+	    	if (isFilenameValid(filename)) {
+		    	// Stores filename in event
+		    	e.setFilename(filename);
+		    }
+	    } while(!(isFilenameValid(filename)));
+	    return filename;
+  }
+  public static void printCal(EventLinkedList<Event> cal) {
+	  System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~CALENDAR"
+			  + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+	  System.out.println(cal);
+	  System.out.print("\n");
+	  
+  }
 }
