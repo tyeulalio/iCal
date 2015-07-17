@@ -24,6 +24,11 @@ public static void displayMenu() throws IOException {
   Comparator c = (Comparator) new Event();
   String choice = "";
   
+  //This is used to text Timezone.java
+  //Timezone.java will be used when reading in event files
+  //Timezone timezone = new Timezone("Hawaii");
+  //timezone.createArray();
+  
   System.out.print("Welcome!\n");
   // Displays menu of options
   do {
