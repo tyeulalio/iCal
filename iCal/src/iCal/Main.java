@@ -53,6 +53,7 @@ public static void displayMenu() throws IOException {
             new1 = gatherData();
             writeIcs(new1);
             cal.add(new1);
+            cal.insertionSort(c);
             cal.calcGCD();
         }
         
@@ -152,188 +153,11 @@ public static void displayMenu() throws IOException {
 	proceed = false;
     while (!proceed) {
       if (tzidAnswer.charAt(0) == 'Y' || tzidAnswer.charAt(0) == 'y') {
-	        System.out.println("=======Timezone (UTC) ======");
-		    String format = "%-76s%s%n";
-		    String format2 = "%-76s%n";
-		    
-		    String prefix1 = "(UTC-1000) Hawaii";
-		    String prefix2 = "(UTC+0300) Nairobi";
-		    System.out.printf(format, prefix1, prefix2);
-		    
-		    String prefix3 = "(UTC-0800) Alaska";
-		    String prefix4 = "(UTC+0300) Baghdad";
-		    System.out.printf(format, prefix3, prefix4);
-		    
-		    String prefix5 = "(UTC-0700) Pacific time (US and Canada)";
-		    String prefix6 = "(UTC+0400) Moscow, St. Petersburg, Volgograd";
-		    System.out.printf(format, prefix5, prefix6);
-		    
-		    String prefix7 = "(UTC-0700) Tijuana, Baja California";
-		    String prefix8 = "(UTC+0400) Abu Dhabi, Muscat";
-		    System.out.printf(format, prefix7, prefix8);
-		   
-		    String prefix9 = "(UTC-0700) Arizona";
-		    String prefix10 = "(UTC+0400) Port Louis";
-		    System.out.printf(format, prefix9, prefix10);
-		    
-		    String prefix11 = "(UTC-0600) Mountain Time (US and Canada)";
-		    String prefix12 = "(UTC+0400) Yerevan";
-		    System.out.printf(format, prefix11, prefix12);
-		    
-		    String prefix13 = "(UTC-0600) Central America";
-		    String prefix14 = "(UTC+0400) Tbilisi";
-		    System.out.printf(format, prefix13, prefix14);
-		    
-		    String prefix15 = "(UTC-0600) Saskatchewan";
-		    String prefix16 = "(UTC+0430) Tehran";
-		    System.out.printf(format, prefix15, prefix16);
-		    
-		    String prefix17 = "(UTC-0500) Central Time (US and Canada)";
-		    String prefix18 = "(UTC+0430) Kabul";
-		    System.out.printf(format, prefix17, prefix18);
-		    
-		    String prefix19 = "(UTC-0500) Bogota, Lima, Quito";
-		    String prefix20 = "(UTC+0500) Baku";
-		    System.out.printf(format, prefix19, prefix20);
-		    
-		    String prefix21 = "(UTC-0500) Mexico City";
-		    String prefix22 = "(UTC+0500) Islamabad, Karachi";
-		    System.out.printf(format, prefix21, prefix22);
-		    
-		    String prefix23 = "(UTC-0430) Caracas";
-		    String prefix24 = "(UTC+0500) Tashkent";
-		    System.out.printf(format, prefix23, prefix24);
-		    
-		    String prefix25 = "(UTC-0400) Eastern Time (US and Canada)";
-		    String prefix26 = "(UTC+0530) Chennai, Kolkata, Mumbai, New Delhi";
-		    System.out.printf(format, prefix25, prefix26);
-		     
-		    String prefix27 = "(UTC-0400) Manaus";
-		    String prefix28 = "(UTC+0530) Sri Jayawardenepura";
-		    System.out.printf(format, prefix27, prefix28);
-		    
-		    String prefix29 = "(UTC-0400) Georgetown";
-		    String prefix30 = "(UTC+0545) Kathmandu";
-		    System.out.printf(format, prefix29, prefix30);
-		    
-		    String prefix31 = "(UTC-0400) Santiago";
-		    String prefix32 = "(UTC+0600) Ekaterinburg";
-		    System.out.printf(format, prefix31, prefix32);
-		    
-		    String prefix33 = "(UTC-0400) La Paz";
-		    String prefix34 = "(UTC+0600) Astana, Dhaka";
-		    System.out.printf(format, prefix33, prefix34);
-		    
-		    String prefix35 = "(UTC-0400) Asuncion";
-		    String prefix36 = "(UTC+0630) Rangoon";
-		    System.out.printf(format, prefix35, prefix36);
-		    
-		    String prefix37 = "(UTC-0400) Indiana (East)";
-		    String prefix38 = "(UTC+0700) Novosibirsk";
-		    System.out.printf(format, prefix37, prefix38);
-		    
-		    String prefix39 = "(UTC-0300) Brasilla";
-		    String prefix40 = "(UTC+0700) Bangkok, Hanoi, Jakarta";
-		    System.out.printf(format, prefix39, prefix40);
-		    
-		    String prefix41 = "(UTC-0300) Montevideo";
-		    String prefix42 = "(UTC+0800) Krasnoyarsk";
-		    System.out.printf(format, prefix41, prefix42);
-		    
-		    String prefix43 = "(UTC-0300) Atlantic Time (Canada)";
-		    String prefix44 = "(UTC+0800) Perth";
-		    System.out.printf(format, prefix43, prefix44);
-		    
-		    String prefix45 = "(UTC-0300) Buenos Aires";
-		    String prefix46 = "(UTC+0800) Taipei";
-		    System.out.printf(format, prefix45, prefix46);
-		    
-		    String prefix47 = "(UTC-0300) Cayenne";
-		    String prefix48 = "(UTC+0800) Beijing, Chongqing, Hong Kong, Urumqi";
-		    System.out.printf(format, prefix47, prefix48);
-		    
-		    String prefix49 = "(UTC-0230) Newfoundland";
-		    String prefix50 = "(UTC+0800) Kuala Lumpur, Singapore";
-		    System.out.printf(format, prefix49, prefix50);
-		    
-		    String prefix51 = "(UTC-0200) Mid-Atlantic";
-		    String prefix52 = "(UTC+0800) Ulaan Bataar";
-		    System.out.printf(format, prefix51, prefix52);
-		    
-		    String prefix53 = "(UTC-0200) Greenland";
-		    String prefix54 = "(UTC+0900) Irkutsk";
-		    System.out.printf(format, prefix53, prefix54);
-		   
-		    String prefix55 = "(UTC-0100) Cape Verde Is.";
-		    String prefix56 = "(UTC+0900) Osaka, Sapporo, Tokyo";
-		    System.out.printf(format, prefix55, prefix56);
-		   
-		    String prefix57 = "(UTC) Monrovia";
-		    String prefix58 = "(UTC+0900) Seoul";
-		    System.out.printf(format, prefix57, prefix58);
-		    
-		    String prefix59 = "(UTC) Azores";
-		    String prefix60 = "(UTC+0930) Darwin";
-		    System.out.printf(format, prefix59, prefix60);
-		   
-		    String prefix61 = "(UTC+0100) Casablanca";
-		    String prefix62 = "(UTC+0930) Adelaide";
-		    System.out.printf(format, prefix61, prefix62);
-		    
-		    String prefix63 = "(UTC+0100) Greenwich Mean Time: Dublin, Edinburgh, Lisbon, London";
-		    String prefix64 = "(UTC+1000) Yakutsk";
-		    System.out.printf(format, prefix63, prefix64);
-		    
-		    String prefix65 = "(UTC+0100) West Central Africa";
-		    String prefix66 = "(UTC+1000) Brisbane";
-		    System.out.printf(format, prefix65, prefix66);
-		    
-		    String prefix67 = "(UTC+0200) Cairo";
-		    String prefix68 = "(UTC+1000) Guam, Port Moresby";
-		    System.out.printf(format, prefix67, prefix68);
-		    
-		    String prefix69 = "(UTC+0200) Harare, Pretoria";
-		    String prefix70 = "(UTC+1000) Hobart";
-		    System.out.printf(format, prefix69, prefix70);
-		    
-		    String prefix71 = "(UTC+0200) Sarajevo, Skopje, Warsaw, Zagreb";
-		    String prefix72 = "(UTC+1000) Canberra, Melbourne, Sydney";
-		    System.out.printf(format, prefix71, prefix72);
-		    
-		    String prefix73 = "(UTC+0200) Brussels, Copenhagen, Madrid, Paris";
-		    String prefix74 = "(UTC+1100) Vladivostok";
-		    System.out.printf(format, prefix73, prefix74);
-		    
-		    String prefix75 = "(UTC+0200) Belgrade, Bratislava, Budapest, Ljubljana, Prague";
-		    String prefix76 = "(UTC+1100) Magadan, Solomon Is., New Caledonia";
-		    System.out.printf(format, prefix75, prefix76);
-		    
-		    String prefix77 = "(UTC+0200) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna";
-		    String prefix78 = "(UTC+1200) Fiji, Marshall Is.";
-		    System.out.printf(format, prefix77, prefix78);
-		    
-		    String prefix79 = "(UTC+0300) Athens, Istanbul, Minsk";
-		    String prefix80 = "(UTC+1200) Guam, Kamchatka";
-		    System.out.printf(format, prefix79, prefix80);
-		    
-		    String prefix81 = "(UTC+0300) Bucharest";
-		    String prefix82 = "(UTC+1200) Auckland, Wellington";
-		    System.out.printf(format, prefix81, prefix82);
-		    
-		    String prefix83 = "(UTC+0300) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius";
-		    String prefix84 = "(UTC+1200) International Date Line West (Eniwetok, Kwajalein)";
-		    System.out.printf(format, prefix83, prefix84);
-		    
-		    String prefix85 = "(UTC+0300) Jerusalem";
-		    String prefix86 = "(UTC+1300) Nuku'alofa";
-		    System.out.printf(format, prefix85, prefix86);
-		   
-		    String prefix87 = "(UTC+0300) Kuwait, Riyadh";
-		    System.out.printf(format2, prefix87);
-		    System.out.print("Please select a timezone (enter numbers only): \n");
-		    
-		    event1.setTzid(scan.nextLine());
-		    proceed = true;
+        displayTimeZone();
+	    System.out.print("Please select a timezone (enter numbers only)\n: ");
+	    
+	    event1.setTzid(scan.nextLine());
+	    proceed = true;
       }
       else if (tzidAnswer.charAt(0) == 'n' || tzidAnswer.charAt(0) == 'n') {
     	  proceed = true;
@@ -435,7 +259,188 @@ public static void displayMenu() throws IOException {
     return event1;
   }
 
-  // This method has the user to input the time 
+  private static void displayTimeZone() {
+	  System.out.println("=======Timezone (UTC) ======");
+	    String format = "%-76s%s%n";
+	    String format2 = "%-76s%n";
+	    
+	    String prefix1 = "(UTC-1000) Hawaii";
+	    String prefix2 = "(UTC+0300) Nairobi";
+	    System.out.printf(format, prefix1, prefix2);
+	    
+	    String prefix3 = "(UTC-0800) Alaska";
+	    String prefix4 = "(UTC+0300) Baghdad";
+	    System.out.printf(format, prefix3, prefix4);
+	    
+	    String prefix5 = "(UTC-0700) Pacific time (US and Canada)";
+	    String prefix6 = "(UTC+0400) Moscow, St. Petersburg, Volgograd";
+	    System.out.printf(format, prefix5, prefix6);
+	    
+	    String prefix7 = "(UTC-0700) Tijuana, Baja California";
+	    String prefix8 = "(UTC+0400) Abu Dhabi, Muscat";
+	    System.out.printf(format, prefix7, prefix8);
+	   
+	    String prefix9 = "(UTC-0700) Arizona";
+	    String prefix10 = "(UTC+0400) Port Louis";
+	    System.out.printf(format, prefix9, prefix10);
+	    
+	    String prefix11 = "(UTC-0600) Mountain Time (US and Canada)";
+	    String prefix12 = "(UTC+0400) Yerevan";
+	    System.out.printf(format, prefix11, prefix12);
+	    
+	    String prefix13 = "(UTC-0600) Central America";
+	    String prefix14 = "(UTC+0400) Tbilisi";
+	    System.out.printf(format, prefix13, prefix14);
+	    
+	    String prefix15 = "(UTC-0600) Saskatchewan";
+	    String prefix16 = "(UTC+0430) Tehran";
+	    System.out.printf(format, prefix15, prefix16);
+	    
+	    String prefix17 = "(UTC-0500) Central Time (US and Canada)";
+	    String prefix18 = "(UTC+0430) Kabul";
+	    System.out.printf(format, prefix17, prefix18);
+	    
+	    String prefix19 = "(UTC-0500) Bogota, Lima, Quito";
+	    String prefix20 = "(UTC+0500) Baku";
+	    System.out.printf(format, prefix19, prefix20);
+	    
+	    String prefix21 = "(UTC-0500) Mexico City";
+	    String prefix22 = "(UTC+0500) Islamabad, Karachi";
+	    System.out.printf(format, prefix21, prefix22);
+	    
+	    String prefix23 = "(UTC-0430) Caracas";
+	    String prefix24 = "(UTC+0500) Tashkent";
+	    System.out.printf(format, prefix23, prefix24);
+	    
+	    String prefix25 = "(UTC-0400) Eastern Time (US and Canada)";
+	    String prefix26 = "(UTC+0530) Chennai, Kolkata, Mumbai, New Delhi";
+	    System.out.printf(format, prefix25, prefix26);
+	     
+	    String prefix27 = "(UTC-0400) Manaus";
+	    String prefix28 = "(UTC+0530) Sri Jayawardenepura";
+	    System.out.printf(format, prefix27, prefix28);
+	    
+	    String prefix29 = "(UTC-0400) Georgetown";
+	    String prefix30 = "(UTC+0545) Kathmandu";
+	    System.out.printf(format, prefix29, prefix30);
+	    
+	    String prefix31 = "(UTC-0400) Santiago";
+	    String prefix32 = "(UTC+0600) Ekaterinburg";
+	    System.out.printf(format, prefix31, prefix32);
+	    
+	    String prefix33 = "(UTC-0400) La Paz";
+	    String prefix34 = "(UTC+0600) Astana, Dhaka";
+	    System.out.printf(format, prefix33, prefix34);
+	    
+	    String prefix35 = "(UTC-0400) Asuncion";
+	    String prefix36 = "(UTC+0630) Rangoon";
+	    System.out.printf(format, prefix35, prefix36);
+	    
+	    String prefix37 = "(UTC-0400) Indiana (East)";
+	    String prefix38 = "(UTC+0700) Novosibirsk";
+	    System.out.printf(format, prefix37, prefix38);
+	    
+	    String prefix39 = "(UTC-0300) Brasilla";
+	    String prefix40 = "(UTC+0700) Bangkok, Hanoi, Jakarta";
+	    System.out.printf(format, prefix39, prefix40);
+	    
+	    String prefix41 = "(UTC-0300) Montevideo";
+	    String prefix42 = "(UTC+0800) Krasnoyarsk";
+	    System.out.printf(format, prefix41, prefix42);
+	    
+	    String prefix43 = "(UTC-0300) Atlantic Time (Canada)";
+	    String prefix44 = "(UTC+0800) Perth";
+	    System.out.printf(format, prefix43, prefix44);
+	    
+	    String prefix45 = "(UTC-0300) Buenos Aires";
+	    String prefix46 = "(UTC+0800) Taipei";
+	    System.out.printf(format, prefix45, prefix46);
+	    
+	    String prefix47 = "(UTC-0300) Cayenne";
+	    String prefix48 = "(UTC+0800) Beijing, Chongqing, Hong Kong, Urumqi";
+	    System.out.printf(format, prefix47, prefix48);
+	    
+	    String prefix49 = "(UTC-0230) Newfoundland";
+	    String prefix50 = "(UTC+0800) Kuala Lumpur, Singapore";
+	    System.out.printf(format, prefix49, prefix50);
+	    
+	    String prefix51 = "(UTC-0200) Mid-Atlantic";
+	    String prefix52 = "(UTC+0800) Ulaan Bataar";
+	    System.out.printf(format, prefix51, prefix52);
+	    
+	    String prefix53 = "(UTC-0200) Greenland";
+	    String prefix54 = "(UTC+0900) Irkutsk";
+	    System.out.printf(format, prefix53, prefix54);
+	   
+	    String prefix55 = "(UTC-0100) Cape Verde Is.";
+	    String prefix56 = "(UTC+0900) Osaka, Sapporo, Tokyo";
+	    System.out.printf(format, prefix55, prefix56);
+	   
+	    String prefix57 = "(UTC) Monrovia";
+	    String prefix58 = "(UTC+0900) Seoul";
+	    System.out.printf(format, prefix57, prefix58);
+	    
+	    String prefix59 = "(UTC) Azores";
+	    String prefix60 = "(UTC+0930) Darwin";
+	    System.out.printf(format, prefix59, prefix60);
+	   
+	    String prefix61 = "(UTC+0100) Casablanca";
+	    String prefix62 = "(UTC+0930) Adelaide";
+	    System.out.printf(format, prefix61, prefix62);
+	    
+	    String prefix63 = "(UTC+0100) Greenwich Mean Time: Dublin, Edinburgh, Lisbon, London";
+	    String prefix64 = "(UTC+1000) Yakutsk";
+	    System.out.printf(format, prefix63, prefix64);
+	    
+	    String prefix65 = "(UTC+0100) West Central Africa";
+	    String prefix66 = "(UTC+1000) Brisbane";
+	    System.out.printf(format, prefix65, prefix66);
+	    
+	    String prefix67 = "(UTC+0200) Cairo";
+	    String prefix68 = "(UTC+1000) Guam, Port Moresby";
+	    System.out.printf(format, prefix67, prefix68);
+	    
+	    String prefix69 = "(UTC+0200) Harare, Pretoria";
+	    String prefix70 = "(UTC+1000) Hobart";
+	    System.out.printf(format, prefix69, prefix70);
+	    
+	    String prefix71 = "(UTC+0200) Sarajevo, Skopje, Warsaw, Zagreb";
+	    String prefix72 = "(UTC+1000) Canberra, Melbourne, Sydney";
+	    System.out.printf(format, prefix71, prefix72);
+	    
+	    String prefix73 = "(UTC+0200) Brussels, Copenhagen, Madrid, Paris";
+	    String prefix74 = "(UTC+1100) Vladivostok";
+	    System.out.printf(format, prefix73, prefix74);
+	    
+	    String prefix75 = "(UTC+0200) Belgrade, Bratislava, Budapest, Ljubljana, Prague";
+	    String prefix76 = "(UTC+1100) Magadan, Solomon Is., New Caledonia";
+	    System.out.printf(format, prefix75, prefix76);
+	    
+	    String prefix77 = "(UTC+0200) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna";
+	    String prefix78 = "(UTC+1200) Fiji, Marshall Is.";
+	    System.out.printf(format, prefix77, prefix78);
+	    
+	    String prefix79 = "(UTC+0300) Athens, Istanbul, Minsk";
+	    String prefix80 = "(UTC+1200) Guam, Kamchatka";
+	    System.out.printf(format, prefix79, prefix80);
+	    
+	    String prefix81 = "(UTC+0300) Bucharest";
+	    String prefix82 = "(UTC+1200) Auckland, Wellington";
+	    System.out.printf(format, prefix81, prefix82);
+	    
+	    String prefix83 = "(UTC+0300) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius";
+	    String prefix84 = "(UTC+1200) International Date Line West (Eniwetok, Kwajalein)";
+	    System.out.printf(format, prefix83, prefix84);
+	    
+	    String prefix85 = "(UTC+0300) Jerusalem";
+	    String prefix86 = "(UTC+1300) Nuku'alofa";
+	    System.out.printf(format, prefix85, prefix86);
+	   
+	    String prefix87 = "(UTC+0300) Kuwait, Riyadh";
+	    System.out.printf(format2, prefix87);
+}
+
+// This method has the user to input the time 
   // and verifies it is in the correct format
   public static String checkValidTime() {
     Scanner scan = new Scanner(System.in);
