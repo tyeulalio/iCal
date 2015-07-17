@@ -43,7 +43,12 @@ public class ReadFile {
 						decipher(currentLine, newEvent); // Deciphers information in line
 						currentLine = bufferedReader.readLine(); // Reads next line of file
 					}
-					//tests list
+					
+					// Stores the filename for reference
+					fileName = fileName.substring(0,fileName.length()-4);
+					newEvent.setFilename(fileName);
+					System.out.println("File imported successfully into calendar. \nFilename \"" + fileName + "\" assigned to event.");
+					
 					calendar.add(newEvent);
 					
 				}

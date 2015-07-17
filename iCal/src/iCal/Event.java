@@ -1,217 +1,137 @@
 package iCal;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Random;
-import java.util.Scanner;
 import java.util.Comparator;
 
-public class Event implements Comparator<Event>{
-	public String title; //SUMMARY
-	public String description;
-	//static public String comment; // COMMENT
-	private static String dateCreated; // CREATED
-	private String dtstamp; // LAST-MODIFIED
-	public String dateStart; // DTSTART
-	public String dateEnd; // DTEND
-	public String timeStart; // DTSTART
-	public String timeEnd; // DTEND
-	
-	private String uuid;
-	private String classType;
-	private String location;
-	private float latitude, longitude;
-	public String comment;
-	private String tzid;
-	
-
-  //////////////////////////////////////////////////////////////
-	   /// ** constructors ** 
-	   //////////////////////////////////////////////////////////////
-	   //////////////////////////////////////////////////////////////
-	public Event() {
-		title = "";
-		description = "";
-		comment = "";
-		String classType = "Public";
-		dateCreated = getDateTime();
-	}
-	
-	public Event(String titlex, String descriptx, String dateStartx, 
-				String dateEndx, String timeStartx, String timeEndx,
-				float longx, float latx) {
-		title = titlex;
-		description = descriptx;
-		dateStart = dateStartx;
-		dateEnd = dateEndx;
-		timeStart = timeStartx;
-		timeEnd = timeEndx;
-		comment = "";
-		String classType = "Public";
-		longitude = longx;
-		latitude = latx;
-	}
-	
-   //////////////////////////////////////////////////////////////
-   /// ** methods ** 
-   //////////////////////////////////////////////////////////////
-
-	// * accessor methods *
-	
-	// This method takes the current date and time and returns it
-	public static String getDateTime()
-	{
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmsszz");
-	    return ( sdf.format(cal.getTime()) );
-	}
-	
-	public String getTitle() {
-		return title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-	
-	//public String getComment() {
-	//	return comment;
-	//}
-	
-	public String getDateCreated() {
-		return dateCreated;
-	}
-	
-	public String getDtstamp() {
-		return dtstamp;
-	}
-	
-	public String getTimeStart() {
-		return timeStart;
-	}
-	
-	public String getTimeEnd() {
-		return timeEnd;
-	}
-	
-  public String getClassType() {
-    return classType;  
-  }
-  
-  public String getLocation() {
-    return location;
-  }
-  
-  public String getDateStart() {
-  	return dateStart;
-  }
-  
-  public String getDateEnd() {
-  	return dateEnd;
-  }
-  
-  public Float getLatitude(){
-  	return latitude;
-  }
-  
-  public Float getLongitude(){
-  	return longitude;
-  }
-  
-  public String getUUID(){
-  	return uuid;
-  }
-  
-  public String getTzid(){
-  	return tzid;
-  }
-  
-
-	////////////////////////////////////////////////////////////////
-	// * mutator methods *
-	
-	// This method sets the current date and time to be the date created 
-	public static void setDateCreated(String s) 
-	{
-		if (s != null){
-			dateCreated = s;
-		}
-		else {
-			dateCreated = getDateTime();
-		}
-	}
-	
-	public void setTitle(String x) {
-		title = x;
-	}
-
-	public void setDescription(String x) {
-		description = x;
-	}
-	
-	public void setComment(String x) {
-		comment = x;
-	}
-
-	public void setDtstamp(String x) {
-		dtstamp = x;
-	}
-	
-	public void setDateStart(String x) {
-		dateStart = x + "00";
-	}
-	
-	public void setDateEnd(String x) {
-		dateEnd = x + "00";
-	}
-	
-	public void setTimeStart(String x) {
-		timeStart = x;
-	}
-	
-	public void setTimeEnd(String x) {
-		timeEnd = x;
-	}
-	
-	public void setClassType(String x) {
-	  classType = x;
-	}
-
-  public void setLocation(String x) {
-    location = x;
-  }
-  
-  public void setLongitude(Float x) {
-    longitude = x;
-  }
-  
-  public void setLatitude(Float x) {
-    latitude = x;
-  }
-  
-   public void setUUID(String x) {
-    uuid = x;
-  }
-  
-  public void setTzid(String x){
-	   tzid = x;
-   }
-  
-  @Override
-  public String toString() {
-    return "Title: " + title + " \tDate: " + dateStart + " \tTime: " + timeStart + " \nComment: " + comment;
-  }
+/**
+ * implements a Doubly-linked list
+ * @author Scott Leung
+ *
+ * @param <E>
+ */
+public class EventLinkedList<E> {
+  private DLinkedNode<E> head = new DLinkedNode<E>();
+  private DLinkedNode<E> tail = new DLinkedNode<E>();
+  private int size;
 
   /**
-   * compares the date and start time of two events
-   * @param Event e1
-   * @param Event e2
-   * @return int 0 if equal, negative if e1 < e2, positive if e1 > e2
+   * implements a doubly-linked node
+   * @author scott leung
+   *
+   * @param <E>
    */
-  public int compare(Event e1, Event e2) {
-    String str1 = e1.getDateStart() + e1.getTimeStart();
-    String str2 = e2.getDateStart() + e2.getTimeStart();
-    return str1.compareToIgnoreCase(str2);
+  private static class DLinkedNode<E> {
+    E data;
+    DLinkedNode<E> next = null;
+    DLinkedNode<E> prev = null;
+    
+    /**
+     * default constructor for a doubly-linked node
+     */
+    private DLinkedNode() {
+      this.data = null;
+      this.next = null;
+      this.prev = null;
+    }
+    
+    /**
+     * constructor for a doubly-linked node that takes in an element
+     * @param E element
+     */
+    private DLinkedNode(E element) {
+      this.data = element;
+    }
   }
-
+  
+  /**
+   * Constructor for a linked list using doubly-linked nodes
+   */
+  public EventLinkedList() {
+    this.head.next = tail;
+    this.tail.prev = head;
+    this.size = 0;
+  }
+  
+  /**
+   * adds an element to the end of a linked list
+   * @param E e element to be added
+   * @return true if element was added successfully
+   */
+  public boolean add(E e) {
+    DLinkedNode<E> node = new DLinkedNode<E>(e);
+    node.prev = tail.prev;
+    tail.prev.next = node;
+    node.next = tail;
+    tail.prev = node;
+    size++;
+    return true;
+  }
+  
+  /**
+   * returns the size of the list
+   * @return int size of the list
+   */
+  public int size() {
+    return size;
+  }
+  
+  
+  /**
+   * returns a string representation of the list
+   * @author Data Structures by Koffman and Wolfgang
+   * @return String the list
+   */
+  public String toString() {
+    DLinkedNode<E> nodeRef = head.next;
+    StringBuilder result = new StringBuilder();
+    while (!nodeRef.equals(tail)) {
+      result.append(nodeRef.data);
+      if (!nodeRef.next.equals(tail)) {
+        result.append(" \n");
+      }
+      nodeRef = nodeRef.next;
+    }
+    return result.toString();
+  }
+  
+  /**
+   * implements the insertion sort on the list
+   * @param Comparator compare
+   */
+  public void insertionSort(Comparator<? super E> compare) {
+    DLinkedNode<E> node = head.next.next;
+    while (!node.equals(tail)) {
+      E nextVal = node.data;
+      DLinkedNode<E> compNode = node;
+      while (!compNode.equals(head.next) && compare.compare(nextVal, compNode.prev.data) < 0) {
+        compNode.data = compNode.prev.data;
+        compNode = compNode.prev;
+      }
+      compNode.data = nextVal;
+      node = node.next;
+    }
+  }
+  
+  /**
+   * calculates the great circle distance between two events 
+   */
+  public void calcGCD() {
+    DLinkedNode<Event> node = (DLinkedNode<Event>) head.next;
+    while(!node.next.equals(tail)) {
+      if(node.data.getDateStart().equals(node.next.data.getDateStart())) {
+        Double lat1 = (double) node.data.getLatitude();
+        Double long1 = (double) node.data.getLongitude();
+        Double lat2 = (double) node.next.data.getLatitude();
+        Double long2 = (double) node.next.data.getLongitude();
+        if(lat1 != null && long1 != null && lat2 != null && long2 != null) {
+          float miles, km;
+          miles = (float) (3963 * Math.acos(Math.cos(lat1) * Math.cos(lat2) * Math.cos(long1 - long2) + Math.sin(lat1) * Math.sin(lat2)));
+          km = (float) (miles * 1.60934);
+          
+          node.data.setComment("The great circle distance to your next event is " + miles + " miles(or " + km + "km).");    
+        }
+      }
+      node = node.next;
+    }
+  }
+  
 }
