@@ -21,6 +21,7 @@ public class Event implements Comparator<Event>{
 	private String location;
 	private float latitude, longitude;
 	private String tzid;
+	private String fileName;
 	
 
   //////////////////////////////////////////////////////////////
@@ -35,9 +36,10 @@ public class Event implements Comparator<Event>{
 		dateCreated = getDateTime();
 	}
 	
-	public Event(String titlex, String descriptx, String dateStartx, 
-				String dateEndx, String timeStartx, String timeEndx,
-				float longx, float latx) {
+	public Event(String titlex, String descriptx, 
+					String dateStartx, String dateEndx, 
+					String timeStartx, String timeEndx, 
+					float longx, float latx, String string) {
 		title = titlex;
 		description = descriptx;
 		dateStart = dateStartx;
@@ -124,6 +126,10 @@ public class Event implements Comparator<Event>{
   	return tzid;
   }
   
+  public String getFileName(){
+	  return fileName;
+  }
+  
 
 	////////////////////////////////////////////////////////////////
 	// * mutator methods *
@@ -193,6 +199,10 @@ public class Event implements Comparator<Event>{
   
   public void setTzid(String x){
 	tzid = x;
+  }
+  
+  public void setFileName(String x){
+	  fileName = x;
   }
   
   @Override

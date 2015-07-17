@@ -46,7 +46,7 @@ public class ReadFile {
 					
 					// Stores the filename for reference
 					fileName = fileName.substring(0,fileName.length()-4);
-					newEvent.setFilename(fileName);
+					newEvent.setFileName(fileName);
 					System.out.println("File imported successfully into calendar. \nFilename \"" + fileName + "\" assigned to event.");
 					
 					calendar.add(newEvent);

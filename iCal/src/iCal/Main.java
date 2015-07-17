@@ -34,7 +34,6 @@ public static void displayMenu() throws IOException {
 	              "2)  IMPORT .ics file to calendar\n" +
 	              "3)  TEST \n" +
 	              "4)  VIEW calendar\n" +
-	              "5)  EXPORT calendar (not fully implemented yet)\n" +
 	              "10) QUIT"
 	              + "\n\nChoose from the menu above by typing the number\n"
 	              + "or the capitalized word, then pressing enter: ");
@@ -481,7 +480,7 @@ public static void displayMenu() throws IOException {
    */
   private static void writeIcs(Event event1) throws IOException
   {
-    	PrintWriter pw = new PrintWriter(new FileWriter((event1.getFilename() +".ics"), false));
+    	PrintWriter pw = new PrintWriter(new FileWriter((event1.getFileName() +".ics"), false));
 	 		
 	    //Header info
 	    pw.printf("%s%n", "BEGIN:VCALENDAR");
@@ -544,7 +543,7 @@ public static void displayMenu() throws IOException {
 	    	filename = scan.nextLine();
 	    	if (isFilenameValid(filename)) {
 		    	// Stores filename in event
-		    	e.setFilename(filename);
+		    	e.setFileName(filename);
 		    }
 	    } while(!(isFilenameValid(filename)));
 	    return filename;
