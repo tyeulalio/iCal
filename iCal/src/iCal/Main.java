@@ -360,9 +360,28 @@ public static void displayMenu() throws IOException {
       if (geoAnswer.charAt(0) == 'Y' || geoAnswer.charAt(0) == 'y') {
         System.out.println("Enter coordinates in decimal degrees.");
         System.out.print("Enter latitude (0-90): ");
-        event1.setLatitude(scan.nextFloat()); // truncate to 6 decimal places on output
-        System.out.print("Enter longitute (0-180): ");
-        event1.setLongitude(scan.nextFloat()); // truncate to 6 decimal places on output
+        //check to make sure input is between 0-90
+        Float latInput = scan.nextFloat();
+        while (Math.abs(latInput) > 90){
+        	System.out.println("\nLatitude must be specified by a number between 0-90.");
+        	System.out.println("South is indicated by a minus sign (-).");
+        	System.out.println("North is indicated by a plus sign (+) or the absence of a minus sign (-).");
+        	System.out.print("Please retry entering a latitude: ");
+        	latInput = scan.nextFloat();
+        }
+        event1.setLatitude(latInput); // truncate to 6 decimal places on output
+        
+        System.out.print("Enter longitude (0-180): ");
+      //check to make sure input is between 0-180
+        Float lonInput = scan.nextFloat();
+        while (Math.abs(lonInput) > 180){
+        	System.out.println("\nLongitude must be specified by a number between 0-180.");
+        	System.out.println("West is indicated by a minus sign (-).");
+        	System.out.println("East is indicated by a plus sign (+) or the absence of a minus sign (-).");
+        	System.out.print("Please retry entering a longitude: ");
+        	lonInput = scan.nextFloat();
+        }
+        event1.setLongitude(lonInput); // truncate to 6 decimal places on output
         proceed = true;
       }
       else if (geoAnswer.charAt(0) == 'N' || geoAnswer.charAt(0) == 'n') {
@@ -373,8 +392,6 @@ public static void displayMenu() throws IOException {
         geoAnswer = scan.nextLine();
       }
     }
-    // Lat must range from 0-90
-    // Lon must range from 0-180
     
 
     // CLASS
