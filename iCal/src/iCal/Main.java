@@ -39,7 +39,7 @@ public static void displayMenu() throws IOException {
 	              "2)  IMPORT .ics file to calendar\n" +
 	              "3)  TEST \n" +
 	              "4)  VIEW calendar\n" +
-	              "5)  EXPORT first event (still in progress..)\n" +
+	              "5)  EXPORT events in calendar\n" +
 	              "10) QUIT"
 	              + "\n\nChoose from the menu above by typing the number\n"
 	              + "or the capitalized word, then pressing enter: ");
