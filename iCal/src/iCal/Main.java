@@ -39,6 +39,7 @@ public static void displayMenu() throws IOException {
 	              "2)  IMPORT .ics file to calendar\n" +
 	              "3)  TEST \n" +
 	              "4)  VIEW calendar\n" +
+	              "5)  EXPORT events in calendar\n" +
 	              "10) QUIT"
 	              + "\n\nChoose from the menu above by typing the number\n"
 	              + "or the capitalized word, then pressing enter: ");
@@ -57,7 +58,7 @@ public static void displayMenu() throws IOException {
             cal.calcGCD();
         }
         
-        // 2. Import an event file
+        // 2. Reads/Imports an event file
         else if (choice.equalsIgnoreCase("Import") || choice.equals("2")) {
              System.out.print("Please enter the name of your file (Do not include .ics)\n: ");
              String fileName = keyboard.nextLine();
@@ -75,10 +76,10 @@ public static void displayMenu() throws IOException {
         	  // The next 3 lines are being used to test ReadFile
         	  cal.insertionSort(c);
         	  cal.calcGCD();
-        	  printCal(cal);
+        	  displayCal(cal);
         }
          
-        // 3. Tests
+        // 3. Creates several events for testing
         else if (choice.equalsIgnoreCase("Test") || choice.equals("3")) {
           //Event(String titlex, String descriptx, String dateStartx, String dateEndx, String timeStartx, String timeEndx) {
           Event test1 = new Event ("Work", "Not fun", "20150714", "20150714", "140000", "143000", 22, 114, "testing1");
@@ -90,14 +91,27 @@ public static void displayMenu() throws IOException {
           cal.add(test2);
           cal.insertionSort(c);
           cal.calcGCD();
-          printCal(cal);
+          displayCal(cal);
         }
         
         // 4. View calendar linked list
         else if (choice.equalsIgnoreCase("View") || choice.equals("4")) {
-        	printCal(cal);
+        	displayCal(cal);
         }
         
+     // 5. Test export
+        else if (choice.equalsIgnoreCase("Export") || choice.equals("5")) {
+          //Event(String titlex, String descriptx, String dateStartx, String dateEndx, String timeStartx, String timeEndx) {
+        	Event test5 = new Event ("School", "Not fun", "20150714", "20150714", "1400", "1430", +2, -9, "school");
+        	Event test6 = new Event ("Concert", "Very fun", "20150714", "20150714", "1900", "2100", 100, -19, "concert");
+        	cal.add(test5);
+        	cal.add(test6);
+        	cal.calcGCD();
+        	displayCal(cal);
+        	for (int i = 0; i < cal.size(); i++){
+        		writeIcs(cal.getNode(i));	
+        	}
+        }
         // 10. Quit program  
         else if (choice.equalsIgnoreCase("Quit") || choice.equals("10")) {
           System.out.print("Have a nice day.");
@@ -105,7 +119,7 @@ public static void displayMenu() throws IOException {
     }
     catch (Exception e) {
   	  // Error message
-  	  System.out.println("Some kind of error occurred. (Press Return to continue.)");
+  	  System.out.println("Some kind of error occurred. (Press any key then Enter continue.)");
   	  keyboard.next();                   // Clear the input buffer    
     }
     finally {
@@ -545,7 +559,7 @@ public static void displayMenu() throws IOException {
 	    //pw.printf("%s%n", "TRANSP:OPAQUE");
 	    pw.printf("%s%n", "END:VEVENT");
 	    pw.printf("%s%n", "END:VCALENDAR");
-	    System.out.println("Finished saving to file!");
+	    System.out.println("Finished saving to " + event1.getFileName() + ".ics!");
 	    pw.close();
     
   }
@@ -575,11 +589,24 @@ public static void displayMenu() throws IOException {
 	    } while(!(isFilenameValid(filename)));
 	    return filename;
   }
-  public static void printCal(EventLinkedList<Event> cal) {
-	  System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~CALENDAR"
-			  + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+  public static void displayCal(EventLinkedList<Event> cal) {
+	  for (int i = 0; i < 60; i++)
+	  {
+		  System.out.print("~");
+	  }
+	  System.out.print("CALENDAR");
+	  for (int i = 0; i < 60; i++)
+	  {
+		  System.out.print("~");
+	  }
+	  System.out.print("\n");
 	  System.out.println(cal);
+	  for (int i = 0; i < 128; i++)
+	  {
+		  System.out.print("-");
+	  }
 	  System.out.print("\n");
 	  
   }
+  
 }
