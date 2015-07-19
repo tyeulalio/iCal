@@ -275,7 +275,7 @@ public static void displayMenu() throws IOException {
   private static void displayTimeZone() {
 	  System.out.println("=======Timezone (UTC) ======");
 	    String format = "%-76s%s%n";
-	    String format2 = "%-76s%n";
+	    String format2 = "%-70s%n";
 	    
 	    String prefix1 = "(UTC-1000) Hawaii";
 	    String prefix2 = "(UTC+0300) Nairobi";
