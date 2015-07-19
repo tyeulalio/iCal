@@ -34,12 +34,13 @@ public class Event implements Comparator<Event>{
 		comment = "";
 		String classType = "Public";
 		dateCreated = getDateTime();
+		fileName = null;
 	}
 	
 	public Event(String titlex, String descriptx, 
 					String dateStartx, String dateEndx, 
 					String timeStartx, String timeEndx, 
-					float longx, float latx, String string) {
+					float longx, float latx, String filex) {
 		title = titlex;
 		description = descriptx;
 		dateStart = dateStartx;
@@ -50,6 +51,7 @@ public class Event implements Comparator<Event>{
 		String classType = "Public";
 		longitude = longx;
 		latitude = latx;
+		fileName = filex;
 	}
 	
    //////////////////////////////////////////////////////////////
