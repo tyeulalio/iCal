@@ -24,6 +24,7 @@ public class Event implements Comparator<Event>{
 	private float latitude, longitude;
 	private String tzid;
 	private String fileName;
+	private String dtStart;
 	
 
   //////////////////////////////////////////////////////////////
@@ -69,28 +70,28 @@ public class Event implements Comparator<Event>{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmsszz");
 	      
 		// Formats time as UTC -- will make working with timezones easier
-  	  	//System.out.println("current: "+ cal.getTime()); // test print current time
+  	  	//System.out.println("current: "+ sdf.format(cal.getTime())); // test print current time
   	  	TimeZone z = cal.getTimeZone(); // retrieve current timezone of user 
   	  	int offset = z.getRawOffset(); // checks offset from UTC
-  	  	if(z.inDaylightTime(new Date())){ //checks for daylightsavings time
+  	  	if(z.inDaylightTime(new Date())){ //checks for daylightsavings (DST) time
   	  		offset = offset + z.getDSTSavings();
   	  	}
   	  	int offsetHrs = offset / 1000 / 60 / 60;
   	  	int offsetMins = offset / 1000 / 60 % 60;
+  	  	//System.out.println("offset: " + offsetHrs); // TESTING
+  	  	//System.out.println("offset: " + offsetMins); // TESTING
 
-  	  	//System.out.println("offset: " + offsetHrs);
-  	  	//System.out.println("offset: " + offsetMins);
-
+  	  	// Adjusts for offset from UTC, including DST
   	  	cal.add(Calendar.HOUR_OF_DAY, (-offsetHrs));
   	  	cal.add(Calendar.MINUTE, (-offsetMins));
 
+  	  	// Formats UTC time in proper form
   	  	String utcTime = sdf.format(cal.getTime());
   	  	utcTime = utcTime.substring(0, utcTime.length()-3);
   	  	utcTime += "Z";
   	  	//System.out.println("GMT Time: " + utcTime);
   	  		
   	  	return (utcTime);
-  	  
 	}
 	
 	public String getTitle() {
@@ -156,6 +157,11 @@ public class Event implements Comparator<Event>{
   public String getFileName(){
 	  return fileName;
   }
+  
+  public String getDtstart(){
+	  return dtStart;
+  }
+  
   
 
 	////////////////////////////////////////////////////////////////
@@ -230,6 +236,59 @@ public class Event implements Comparator<Event>{
   
   public void setFileName(String x){
 	  fileName = x;
+  }
+  
+  public void setDtstart(){
+	  SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
+	  int year, month, date, hrs, min, sec;
+	  System.out.println(dateStart); //output looks like: 2015121200
+	  String tempDateStart = dateStart;
+	  
+	  year = Integer.parseInt(tempDateStart.substring(0, 4));
+	  month = Integer.parseInt(tempDateStart.substring(4, 6));
+	  date = Integer.parseInt(tempDateStart.substring(6,8));
+	  //TESTING
+	  //System.out.println("year is: " + year); 
+	  //System.out.println("month is: " + month);
+	  //System.out.println("date is: "+ date);
+	  
+	  String tempTimeStart = timeStart;
+	  System.out.println("timestart is: " + tempTimeStart);
+	  
+	  hrs = Integer.parseInt(tempTimeStart.substring(0, 2));
+	  min = Integer.parseInt(tempTimeStart.substring(2));
+	  sec = 0;
+	  
+	  System.out.println("time is: " + hrs + " " + min + " " + sec);
+	  
+	  Calendar startCal = Calendar.getInstance();
+	  startCal.set(year, month, date, hrs, min, sec);
+	  String tempDtstart = sdf.format(startCal.getTime());
+	  System.out.println("startCal is:" + tempDtstart);
+	  
+	  // Formats time as UTC -- will make working with timezones easier
+	  //System.out.println("current: "+ sdf.format(cal.getTime())); // test print current time
+	  TimeZone z = startCal.getTimeZone(); // retrieve current timezone of user 
+	  int offset = z.getRawOffset(); // checks offset from UTC
+	  if(z.inDaylightTime(new Date())){ //checks for daylightsavings (DST) time
+	  	offset = offset + z.getDSTSavings();
+	 }
+	  int offsetHrs = offset / 1000 / 60 / 60;
+	  int offsetMins = offset / 1000 / 60 % 60;
+	  System.out.println("offset: " + offsetHrs); // TESTING
+	  System.out.println("offset: " + offsetMins); // TESTING
+
+	  // Adjusts for offset from UTC, including DST
+	  startCal.add(Calendar.HOUR_OF_DAY, (-offsetHrs));
+	  startCal.add(Calendar.MINUTE, (-offsetMins));
+
+	  // Formats UTC time in proper form
+	  String utcStartTime = sdf.format(startCal.getTime());
+	  utcStartTime = utcStartTime.substring(0, utcStartTime.length());
+	  utcStartTime += "Z";
+	  System.out.println("UTC Start Time: " + utcStartTime);
+	  
+	  dtStart = utcStartTime;
   }
   
   @Override

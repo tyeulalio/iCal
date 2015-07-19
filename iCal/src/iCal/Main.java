@@ -160,7 +160,8 @@ public static void displayMenu() throws IOException {
     // Event's start time
     System.out.print("Enter event's start time in 24 hr format (e.g. 4 pm = 1600): ");
     event1.setTimeStart(checkValidTime()); // calls method below to validate time entered is in correct format
-
+    event1.setDtstart();
+    
     // Event's end time
     System.out.print("Enter event's ending time in 24 hr format (e.g. 4 pm = 1600): ");
     event1.setTimeEnd(checkValidTime()); // calls method below to validate time entered is in correct format
@@ -546,7 +547,7 @@ public static void displayMenu() throws IOException {
 	    
 	    //Event info begin
 	    pw.printf("%s%n", "BEGIN:VEVENT");
-	    pw.printf("%s%s%s%s%n", "DTSTART:", event1.getDateStart(), "T", event1.getTimeStart());//start time
+	    pw.printf("%s%s%n", "DTSTART:", event1.getDtstart());//start time
 	    pw.printf("%s%s%s%s%n", "DTEND:", event1.getDateEnd(), "T", event1.getTimeEnd());//end time
 	    pw.printf("%s%s%n", "DTSTAMP:", event1.getDateCreated());//time stamp
 	    pw.printf("%s%n", "UID:" + event1.getUUID() + "@Himalia.com");//need unique id
