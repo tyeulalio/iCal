@@ -2,14 +2,16 @@ package iCal;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Comparator;
+import java.util.TimeZone;
 
 public class Event implements Comparator<Event>{
 	private String title; //SUMMARY
 	private String description;
-	private static String comment; // COMMENT
+	private String comment; // COMMENT
 	private static String dateCreated; // CREATED
 	private String dtstamp; // LAST-MODIFIED
 	private String dateStart; // DTSTART
@@ -34,12 +36,13 @@ public class Event implements Comparator<Event>{
 		comment = "";
 		String classType = "Public";
 		dateCreated = getDateTime();
+		fileName = null;
 	}
 	
 	public Event(String titlex, String descriptx, 
 					String dateStartx, String dateEndx, 
 					String timeStartx, String timeEndx, 
-					float longx, float latx, String string) {
+					float longx, float latx, String filex) {
 		title = titlex;
 		description = descriptx;
 		dateStart = dateStartx;
@@ -50,6 +53,7 @@ public class Event implements Comparator<Event>{
 		String classType = "Public";
 		longitude = longx;
 		latitude = latx;
+		fileName = filex;
 	}
 	
    //////////////////////////////////////////////////////////////
@@ -63,7 +67,30 @@ public class Event implements Comparator<Event>{
 	{
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmsszz");
-	    return ( sdf.format(cal.getTime()) );
+	      
+		// Formats time as UTC -- will make working with timezones easier
+  	  	//System.out.println("current: "+ cal.getTime()); // test print current time
+  	  	TimeZone z = cal.getTimeZone(); // retrieve current timezone of user 
+  	  	int offset = z.getRawOffset(); // checks offset from UTC
+  	  	if(z.inDaylightTime(new Date())){ //checks for daylightsavings time
+  	  		offset = offset + z.getDSTSavings();
+  	  	}
+  	  	int offsetHrs = offset / 1000 / 60 / 60;
+  	  	int offsetMins = offset / 1000 / 60 % 60;
+
+  	  	//System.out.println("offset: " + offsetHrs);
+  	  	//System.out.println("offset: " + offsetMins);
+
+  	  	cal.add(Calendar.HOUR_OF_DAY, (-offsetHrs));
+  	  	cal.add(Calendar.MINUTE, (-offsetMins));
+
+  	  	String utcTime = sdf.format(cal.getTime());
+  	  	utcTime = utcTime.substring(0, utcTime.length()-3);
+  	  	utcTime += "Z";
+  	  	//System.out.println("GMT Time: " + utcTime);
+  	  		
+  	  	return (utcTime);
+  	  
 	}
 	
 	public String getTitle() {

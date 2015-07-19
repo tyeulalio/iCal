@@ -43,6 +43,10 @@ public class ReadFile {
 						decipher(currentLine, newEvent); // Deciphers information in line
 						currentLine = bufferedReader.readLine(); // Reads next line of file
 					}
+					// Need a filename for event to be output properly
+					newEvent.setFileName(newEvent.getTitle() + newEvent.getDateStart());
+					
+					
 					//tests list
 					calendar.add(newEvent);
 					

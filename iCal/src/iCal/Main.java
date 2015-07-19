@@ -1,6 +1,8 @@
 package iCal;
 
+import java.util.Calendar;
 import java.util.Scanner;
+import java.util.TimeZone;
 import java.util.UUID;
 import java.io.File;
 import java.io.FileWriter;
@@ -9,6 +11,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.Comparator;
+import java.util.Date;
 
 
 public class Main {
@@ -72,7 +75,9 @@ public static void displayMenu() throws IOException {
         	
         	  ReadFile read = new ReadFile(fullFileName, cal);
         	  read.ReadFile();
-
+        	  
+        	  
+        	  
         	  // The next 3 lines are being used to test ReadFile
         	  cal.insertionSort(c);
         	  cal.calcGCD();

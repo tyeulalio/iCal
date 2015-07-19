@@ -46,7 +46,7 @@ public class Timezone {
 	//creates an array with timezones so that information can be used
 	//when reading in files
 	public static void createArray(){
-		String[][] timezone = new String[87][2]; //87 = number of time zones, 2 = timezone UTC offset & timezone name
+		String[][] tzArray = new String[87][2]; //87 = number of time zones, 2 = timezone UTC offset & timezone name
 		String fileName = "timezones.txt"; //file with timezones listed
 		String currentLine = "";
 		int count = 0;
@@ -63,8 +63,17 @@ public class Timezone {
 			// Read file line by line until the end
 			while((currentLine = bufferedReader.readLine()) != null){ //might change null to END:VCALENDAR
 				// System.out.println(currentLine); // Used for testing, just prints each line to screen
-				timezone[count][0] = currentline.substring()
 				
+				// Format of timezones on timezone.txt file: (UTC-1000) Hawaii
+				// Timezone array [*][0] = UTC offset
+				// Timezone array [*][1] = timezone name
+				tzArray[count][0] = currentLine.substring(currentLine.indexOf('(')+4, currentLine.indexOf(')'));
+				tzArray[count][1] = currentLine.substring(currentLine.indexOf(')')+2);
+				
+				// Next line is for testing
+				// System.out.println(tzArray[count][0] + "\t" + tzArray[count][1]);
+				
+				count++;
 			}
 		// Close files
 		bufferedReader.close();
