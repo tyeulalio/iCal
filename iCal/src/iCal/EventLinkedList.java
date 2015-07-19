@@ -110,6 +110,14 @@ public class EventLinkedList<E> {
       node = node.next;
     }
   }
+
+  public Event getNode(int index) {
+	  DLinkedNode<Event> node = (DLinkedNode<Event>) head.next;
+	  for (int i = 0; i < index && node != null; i++) {
+		  node = node.next;
+	  }
+	  return node.data;
+  }
   
   /**
    * calculates the great circle distance between two events 
