@@ -43,12 +43,7 @@ public class ReadFile {
 						decipher(currentLine, newEvent); // Deciphers information in line
 						currentLine = bufferedReader.readLine(); // Reads next line of file
 					}
-					
-					// Stores the filename for reference
-					fileName = fileName.substring(0,fileName.length()-4);
-					newEvent.setFileName(fileName);
-					System.out.println("File imported successfully into calendar. \nFilename \"" + fileName + "\" assigned to event.");
-					
+					//tests list
 					calendar.add(newEvent);
 					
 				}
@@ -71,12 +66,24 @@ public class ReadFile {
 	
 	// This method is used to decipher what information is contained in each line of the file
 	public void decipher(String currentLine, Event newEvent){
-		
+		String propertyData; 
+		String propertyName;
 		
 		int colonIndex = currentLine.indexOf(':'); //find colon index
-		String propertyData = currentLine.substring(colonIndex+1);
-		String propertyName = currentLine.substring(0, colonIndex);
+		// need to check for semicolon for dtstart and dtend
+		int semicolonIndex = currentLine.indexOf(';');
 		
+		// this is used to catch the different formats that dtstart and dtend come in
+		// See this page for format examples:
+		// http://www.kanzaki.com/docs/ical/dateTime.html
+		if (semicolonIndex != -1 && semicolonIndex < colonIndex){
+			propertyData = currentLine.substring(semicolonIndex+1);
+			propertyName = currentLine.substring(0,semicolonIndex);
+		}
+		else {
+			propertyData = currentLine.substring(colonIndex+1);
+			propertyName = currentLine.substring(0, colonIndex);
+		}
 		//keep deciphering event until the end of even is reached
 		switch (propertyName){
 		case "SUMMARY":
@@ -86,6 +93,16 @@ public class ReadFile {
 			newEvent.setDescription(propertyData);
 			break;
 		case "DTSTART":
+			int indexOfColon = propertyData.indexOf(':');
+			// checking format of dtstart
+			if ((propertyData.substring(0,4)).equals("TZID")){
+				int indexOfEqual = propertyData.indexOf('=');
+				String tzid = propertyData.substring(indexOfEqual+1, indexOfColon);
+				newEvent.setTzid(tzid);
+				//System.out.print("Event tzid is: " + newEvent.getTzid());
+				propertyData = propertyData.substring(indexOfColon);
+			}
+			
 			// DTSTART looks like this: 20150807T130000
 			// Numbers before 'T' is dateStart
 			// Numbers after 'T' is timeStart
@@ -101,6 +118,16 @@ public class ReadFile {
 			//System.out.println("timeStart is: " + timeStart);	 
 			break;
 		case "DTEND":
+			indexOfColon = propertyData.indexOf(':');
+			// checking format of dtstart
+			if ((propertyData.substring(0,4)).equals("TZID")){
+				int indexOfEqual = propertyData.indexOf('=');
+				String tzid = propertyData.substring(indexOfEqual+1, indexOfColon);
+				newEvent.setTzid(tzid);
+				// System.out.print("Event tzid is: " + newEvent.getTzid());
+				propertyData = propertyData.substring(indexOfColon);
+			}
+			
 			// DTEND looks like this: 20150807T130000
 			// Numbers before 'T' is dateStart
 			// Numbers after 'T' is timeStart
@@ -116,10 +143,11 @@ public class ReadFile {
 			//System.out.println("timeEnd is: " + timeEnd);	 			
 			break;
 		case "DTSTAMP":
-			// need to be able to save this in the event class as variable
+			newEvent.setDtstamp(propertyData);
 			break;
 		case "UID":
-			// save this somewhere? Need to print onto new .ics file?
+			newEvent.setUUID(propertyData);
+			break;
 		case "CLASS":
 			newEvent.setClassType(propertyData);
 			break;
