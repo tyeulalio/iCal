@@ -3,7 +3,6 @@ package iCal;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.util.TimeZone;
-import java.util.UUID;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -192,10 +191,6 @@ public static void displayMenu() throws IOException {
     // Date modified
     event1.setDtstamp(event1.getDateTime());
 
-    // UUID (Randomly generates number here, followed by @Himalian.com)
-    UUID idOne = UUID.randomUUID();
-    event1.setUUID(idOne.toString());
-    
     // Location
     System.out.print("Enter event's location (optional; press Enter to continue): ");
     event1.setLocation(scan.nextLine());
