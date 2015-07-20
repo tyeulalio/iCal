@@ -111,9 +111,9 @@ public class Event implements Comparator<Event>{
 		return description;
 	}
 	
-	//public String getComment() {
-	//	return comment;
-	//}
+	public String getComment() {
+		return comment;
+	}
 	
 	public String getDateCreated() {
 		return dateCreated;
