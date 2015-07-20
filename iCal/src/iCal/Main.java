@@ -163,6 +163,7 @@ public static void displayMenu() throws IOException {
     // Event's end time
     System.out.print("Enter event's ending time in 24 hr format (e.g. 4 pm = 1600): ");
     event1.setTimeEnd(checkValidTime()); // calls method below to validate time entered is in correct format
+    event1.setDtend();
     
     // Time Zone Selection
     System.out.print("Would you like to choose a timezone? (y/n): ");

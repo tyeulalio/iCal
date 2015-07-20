@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Comparator;
 import java.util.TimeZone;
+import java.util.UUID;
 
 public class Event implements Comparator<Event>{
 	private String title; //SUMMARY
@@ -25,6 +26,7 @@ public class Event implements Comparator<Event>{
 	private String tzid;
 	private String fileName;
 	private String dtStart;
+	private String dtEnd;
 	
 
   //////////////////////////////////////////////////////////////
@@ -38,6 +40,8 @@ public class Event implements Comparator<Event>{
 		String classType = "Public";
 		dateCreated = getDateTime();
 		fileName = null;
+		UUID idOne = UUID.randomUUID();
+		setUUID(idOne.toString());
 	}
 	
 	public Event(String titlex, String descriptx, 
@@ -55,6 +59,8 @@ public class Event implements Comparator<Event>{
 		longitude = longx;
 		latitude = latx;
 		fileName = filex;
+		UUID idOne = UUID.randomUUID();
+		setUUID(idOne.toString());
 	}
 	
    //////////////////////////////////////////////////////////////
@@ -162,6 +168,9 @@ public class Event implements Comparator<Event>{
 	  return dtStart;
   }
   
+  public String getDtend(){
+	  return dtEnd;
+  }
   
 
 	////////////////////////////////////////////////////////////////
@@ -239,56 +248,66 @@ public class Event implements Comparator<Event>{
   }
   
   public void setDtstart(){
-	  SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
-	  int year, month, date, hrs, min, sec;
-	  System.out.println(dateStart); //output looks like: 2015121200
-	  String tempDateStart = dateStart;
+	  dtStart = convertToUTC(dateStart, timeStart);
+  }
+  
+  public void setDtend(){
+	  dtEnd = convertToUTC(dateEnd, timeEnd);
+  }
+  
+  public String convertToUTC(String dateStartEnd, String timeStartEnd){
+	  // String dateStartEnd should be set to either dateStart or dateEnd
+	  // String timeStartEnd should be set to either timeStart or timeEnd
 	  
-	  year = Integer.parseInt(tempDateStart.substring(0, 4));
-	  month = Integer.parseInt(tempDateStart.substring(4, 6));
-	  date = Integer.parseInt(tempDateStart.substring(6,8));
+	  SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
+	  int year, month, day, hrs, min, sec;
+	  //System.out.println(dateStart); //output looks like: 2015121200
+	  String date = dateStartEnd;
+	  
+	  year = Integer.parseInt(date.substring(0, 4));
+	  month = Integer.parseInt(date.substring(4, 6));
+	  day = Integer.parseInt(date.substring(6,8));
 	  //TESTING
 	  //System.out.println("year is: " + year); 
 	  //System.out.println("month is: " + month);
 	  //System.out.println("date is: "+ date);
 	  
-	  String tempTimeStart = timeStart;
-	  System.out.println("timestart is: " + tempTimeStart);
+	  String time = timeStartEnd;
+	  //System.out.println("timestart is: " + time);
 	  
-	  hrs = Integer.parseInt(tempTimeStart.substring(0, 2));
-	  min = Integer.parseInt(tempTimeStart.substring(2));
+	  hrs = Integer.parseInt(time.substring(0, 2));
+	  min = Integer.parseInt(time.substring(2));
 	  sec = 0;
 	  
-	  System.out.println("time is: " + hrs + " " + min + " " + sec);
+	  //System.out.println("time is: " + hrs + " " + min + " " + sec);
 	  
-	  Calendar startCal = Calendar.getInstance();
-	  startCal.set(year, month, date, hrs, min, sec);
-	  String tempDtstart = sdf.format(startCal.getTime());
-	  System.out.println("startCal is:" + tempDtstart);
+	  Calendar utcCal = Calendar.getInstance();
+	  utcCal.set(year, month, day, hrs, min, sec);
+	  String tempDtstart = sdf.format(utcCal.getTime());
+	  //System.out.println("startCal is:" + tempDtstart);
 	  
 	  // Formats time as UTC -- will make working with timezones easier
 	  //System.out.println("current: "+ sdf.format(cal.getTime())); // test print current time
-	  TimeZone z = startCal.getTimeZone(); // retrieve current timezone of user 
+	  TimeZone z = utcCal.getTimeZone(); // retrieve current timezone of user 
 	  int offset = z.getRawOffset(); // checks offset from UTC
 	  if(z.inDaylightTime(new Date())){ //checks for daylightsavings (DST) time
 	  	offset = offset + z.getDSTSavings();
 	 }
 	  int offsetHrs = offset / 1000 / 60 / 60;
 	  int offsetMins = offset / 1000 / 60 % 60;
-	  System.out.println("offset: " + offsetHrs); // TESTING
-	  System.out.println("offset: " + offsetMins); // TESTING
+	  //System.out.println("offset: " + offsetHrs); // TESTING
+	  //System.out.println("offset: " + offsetMins); // TESTING
 
 	  // Adjusts for offset from UTC, including DST
-	  startCal.add(Calendar.HOUR_OF_DAY, (-offsetHrs));
-	  startCal.add(Calendar.MINUTE, (-offsetMins));
+	  utcCal.add(Calendar.HOUR_OF_DAY, (-offsetHrs));
+	  utcCal.add(Calendar.MINUTE, (-offsetMins));
 
 	  // Formats UTC time in proper form
-	  String utcStartTime = sdf.format(startCal.getTime());
-	  utcStartTime = utcStartTime.substring(0, utcStartTime.length());
-	  utcStartTime += "Z";
-	  System.out.println("UTC Start Time: " + utcStartTime);
+	  String utc = sdf.format(utcCal.getTime());
+	  utc = utc.substring(0, utc.length());
+	  //System.out.println("UTC End Time: " + utc);
 	  
-	  dtStart = utcStartTime;
+	  return utc;
   }
   
   @Override
