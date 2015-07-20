@@ -278,7 +278,7 @@ public class Event implements Comparator<Event>{
 		  return null;
 	  }
 	  
-	  System.out.println("end: " + dateEnd + timeEnd);
+	  //System.out.println("end: " + dateEnd + timeEnd);
 	  
 	  SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
 	  int year, month, day, hrs, min, sec;
@@ -323,19 +323,19 @@ public class Event implements Comparator<Event>{
 	  utcCal.add(Calendar.HOUR_OF_DAY, (-offsetHrs));
 	  utcCal.add(Calendar.MINUTE, (-offsetMins));
 
-	   System.out.println("tzid is: " + tzid); //TESTING
+	   //System.out.println("tzid is: " + tzid); //TESTING
 	  // Adjust for event in different timezone
 	  int tzidInt = Integer.parseInt(tzid);
 	  tzidInt /= 100;
-	  System.out.println("tzidInt is: " + tzidInt); //TESTING
+	  //System.out.println("tzidInt is: " + tzidInt); //TESTING
 	  int tzidDiff = offsetHrs - tzidInt;
-	  System.out.println("tzidDiff = " + tzidDiff); //TESTING
+	  //System.out.println("tzidDiff = " + tzidDiff); //TESTING
 	  utcCal.add(Calendar.HOUR_OF_DAY,  (tzidDiff));
 	  
 	  // Formats UTC time in proper form
 	  String utc = sdf.format(utcCal.getTime());
 	  utc = utc.substring(0, utc.length());
-	  System.out.println("UTC Time: " + utc);
+	  //System.out.println("UTC Time: " + utc);
 	  
 	  return utc;
   }
