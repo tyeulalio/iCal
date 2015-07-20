@@ -4,12 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
-import java.util.Scanner;package iCal;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.Comparator;
 import java.util.TimeZone;
