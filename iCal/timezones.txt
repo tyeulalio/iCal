@@ -1,0 +1,87 @@
+(UTC-1000) Hawaii
+(UTC+0300) Nairobi
+(UTC-0800) Alaska
+(UTC+0300) Baghdad
+(UTC-0700) Pacific time (US and Canada)
+(UTC+0400) Moscow, St. Petersburg, Volgograd
+(UTC-0700) Tijuana, Baja California
+(UTC+0400) Abu Dhabi, Muscat
+(UTC-0700) Arizona
+(UTC+0400) Port Louis
+(UTC-0600) Mountain Time (US and Canada)
+(UTC+0400) Yerevan
+(UTC-0600) Central America
+(UTC+0400) Tbilisi
+(UTC-0600) Saskatchewan
+(UTC+0430) Tehran
+(UTC-0500) Central Time (US and Canada)
+(UTC+0430) Kabul
+(UTC-0500) Bogota, Lima, Quito
+(UTC+0500) Baku
+(UTC-0500) Mexico City
+(UTC+0500) Islamabad, Karachi
+(UTC-0430) Caracas
+(UTC+0500) Tashkent
+(UTC-0400) Eastern Time (US and Canada)
+(UTC+0530) Chennai, Kolkata, Mumbai, New Delhi
+(UTC-0400) Manaus
+(UTC+0530) Sri Jayawardenepura
+(UTC-0400) Georgetown
+(UTC+0545) Kathmandu
+(UTC-0400) Santiago
+(UTC+0600) Ekaterinburg
+(UTC-0400) La Paz
+(UTC+0600) Astana, Dhaka
+(UTC-0400) Asuncion
+(UTC+0630) Rangoon
+(UTC-0400) Indiana (East)
+(UTC+0700) Novosibirsk
+(UTC-0300) Brasilla
+(UTC+0700) Bangkok, Hanoi, Jakarta
+(UTC-0300) Montevideo
+(UTC+0800) Krasnoyarsk
+(UTC-0300) Atlantic Time (Canada)
+(UTC+0800) Perth
+(UTC-0300) Buenos Aires
+(UTC+0800) Taipei
+(UTC-0300) Cayenne
+(UTC+0800) Beijing, Chongqing, Hong Kong, Urumqi
+(UTC-0230) Newfoundland
+(UTC+0800) Kuala Lumpur, Singapore
+(UTC-0200) Mid-Atlantic
+(UTC+0800) Ulaan Bataar
+(UTC-0200) Greenland
+(UTC+0900) Irkutsk
+(UTC-0100) Cape Verde Is.
+(UTC+0900) Osaka, Sapporo, Tokyo
+(UTC) Monrovia
+(UTC+0900) Seoul
+(UTC) Azores
+(UTC+0930) Darwin
+(UTC+0100) Casablanca
+(UTC+0930) Adelaide
+(UTC+0100) Greenwich Mean Time: Dublin, Edinburgh, Lisbon, London
+(UTC+1000) Yakutsk
+(UTC+0100) West Central Africa
+(UTC+1000) Brisbane
+(UTC+0200) Cairo
+(UTC+1000) Guam, Port Moresby
+(UTC+0200) Harare, Pretoria
+(UTC+1000) Hobart
+(UTC+0200) Sarajevo, Skopje, Warsaw, Zagreb
+(UTC+1000) Canberra, Melbourne, Sydney
+(UTC+0200) Brussels, Copenhagen, Madrid, Paris
+(UTC+1100) Vladivostok
+(UTC+0200) Belgrade, Bratislava, Budapest, Ljubljana, Prague
+(UTC+1100) Magadan, Solomon Is., New Caledonia
+(UTC+0200) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna
+(UTC+1200) Fiji, Marshall Is.
+(UTC+0300) Athens, Istanbul, Minsk
+(UTC+1200) Guam, Kamchatka
+(UTC+0300) Bucharest
+(UTC+1200) Auckland, Wellington
+(UTC+0300) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius
+(UTC+1200) International Date Line West (Eniwetok, Kwajalein)
+(UTC+0300) Jerusalem
+(UTC+1300) Nuku'alofa
+(UTC+0300) Kuwait, Riyadh

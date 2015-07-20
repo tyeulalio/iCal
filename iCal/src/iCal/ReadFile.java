@@ -43,11 +43,45 @@ public class ReadFile {
 						decipher(currentLine, newEvent); // Deciphers information in line
 						currentLine = bufferedReader.readLine(); // Reads next line of file
 					}
-					//tests list
-					calendar.add(newEvent);
 					
-				}
-				
+					
+					// Need a filename for event to be output properly
+					// Get first word of summary
+					String title = newEvent.getTitle();
+					int titleSpace = title.indexOf(' ');
+					String titleFirstWord, locationFirstWord;
+					if (titleSpace == -1)
+						titleFirstWord = title;
+					else 
+						titleFirstWord = title.substring(0, titleSpace);
+					// Get first word of location
+					String location = newEvent.getLocation();
+					int locationSpace = location.indexOf(' ');
+					if (locationSpace == -1)
+						locationFirstWord = location;
+					else 
+						locationFirstWord = location.substring(0, locationSpace);
+					if (locationFirstWord.length() > 2)
+						locationFirstWord = "_at_" + locationFirstWord;
+					newEvent.setFileName(titleFirstWord + locationFirstWord);
+					
+					
+					// If .ics file contained tzid in dtstart/dtend, must convert to offset time
+					if (newEvent.getTzid() != null){
+						//System.out.println("tzid is: " + newEvent.getTzid()); //TEST
+						Timezone timezone = new Timezone(newEvent.getTzid());
+						timezone.createArray();
+						//System.out.println("tzOffSet is: " + timezone.searchArray());	//TEST
+						newEvent.setTzid(Timezone.searchArray());
+					}
+					
+				    // Set Dtstart and Dtend only after timezone entry is known
+				    newEvent.setDtstart();
+				    newEvent.setDtend();
+					
+					//tests list
+					calendar.add(newEvent);					
+				}				
 			}
 			
 			// Close files
@@ -93,17 +127,21 @@ public class ReadFile {
 			newEvent.setDescription(propertyData);
 			break;
 		case "DTSTART":
-			int indexOfSemicolon = propertyData.indexOf(';');
 			int indexOfColon = propertyData.indexOf(':');
 			// checking format of dtstart
-			if (indexOfSemicolon != -1){
+			// There are 3 formats that dtstart might be in
+			// dtStart might look like this: DTSTART;TZID=US-Eastern:19980119T020000
+			if ((propertyData.substring(0,4)).equals("TZID")){
 				int indexOfEqual = propertyData.indexOf('=');
 				String tzid = propertyData.substring(indexOfEqual+1, indexOfColon);
 				newEvent.setTzid(tzid);
-				System.out.print("Event tzid is: " + newEvent.getTzid());
+				//System.out.print("Event tzid is: " + newEvent.getTzid());
+				propertyData = propertyData.substring(indexOfColon+1);
 			}
 			
-			// DTSTART looks like this: 20150807T130000
+			// DTSTART might look like: DTSTART:19980119T070000Z
+			
+			// DTSTART might look like this: DTSTART:20150807T130000
 			// Numbers before 'T' is dateStart
 			// Numbers after 'T' is timeStart
 			int indexOfT = propertyData.indexOf('T');
@@ -118,6 +156,16 @@ public class ReadFile {
 			//System.out.println("timeStart is: " + timeStart);	 
 			break;
 		case "DTEND":
+			indexOfColon = propertyData.indexOf(':');
+			// checking format of dtstart
+			if ((propertyData.substring(0,4)).equals("TZID")){
+				int indexOfEqual = propertyData.indexOf('=');
+				String tzid = propertyData.substring(indexOfEqual+1, indexOfColon);
+				newEvent.setTzid(tzid);
+				// System.out.print("Event tzid is: " + newEvent.getTzid());
+				propertyData = propertyData.substring(indexOfColon+1);
+			}
+			
 			// DTEND looks like this: 20150807T130000
 			// Numbers before 'T' is dateStart
 			// Numbers after 'T' is timeStart
@@ -133,10 +181,11 @@ public class ReadFile {
 			//System.out.println("timeEnd is: " + timeEnd);	 			
 			break;
 		case "DTSTAMP":
-			// need to be able to save this in the event class as variable
+			newEvent.setDtstamp(propertyData);
 			break;
 		case "UID":
-			// save this somewhere? Need to print onto new .ics file?
+			newEvent.setUUID(propertyData);
+			break;
 		case "CLASS":
 			newEvent.setClassType(propertyData);
 			break;
