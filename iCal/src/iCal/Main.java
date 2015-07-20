@@ -186,6 +186,9 @@ public static void displayMenu() throws IOException {
     	  
     }
     
+    // Set Dtstart and Dtend only after timezone entry is known
+    	event1.setDtstart();
+    	event1.setDtend();
 
     // Date modified
     event1.setDtstamp(event1.getDateTime());
@@ -540,8 +543,8 @@ public static void displayMenu() throws IOException {
 	    
 	    //Event info begin
 	    pw.printf("%s%n", "BEGIN:VEVENT");
-	    pw.printf("%s%s%s%s%n", "DTSTART:", event1.getDateStart(), "T", event1.getTimeStart());//start time
-	    pw.printf("%s%s%s%s%n", "DTEND:", event1.getDateEnd(), "T", event1.getTimeEnd());//end time
+	    pw.printf("%s%s%n", "DTSTART:", event1.getDtstart());//start time
+	    pw.printf("%s%s%n", "DTEND:", event1.getDtend());//end time
 	    pw.printf("%s%s%n", "DTSTAMP:", event1.getDateCreated());//time stamp
 	    pw.printf("%s%n", "UID:" + event1.getUUID() + "@Himalia.com");//need unique id
 	    pw.printf("%s%s%n", "CLASS:", event1.getClassType());//classification 
