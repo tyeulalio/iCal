@@ -599,7 +599,7 @@ public static void displayMenu() throws IOException {
 		  System.out.print("=");
 	  }
 	  System.out.print("\n");
-	  if (cal.size() >1) {
+	  if (cal.size() > 0) {
 		  System.out.println(cal);
 	  }
 	  else {
