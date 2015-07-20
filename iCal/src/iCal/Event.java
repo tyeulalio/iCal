@@ -165,11 +165,23 @@ public class Event implements Comparator<Event>{
   }
   
   public String getDtstart(){
-	  return dtStart;
+	  if (dtStart == null){
+		  return dateStart + "T" + timeStart;
+	  }
+	  
+	  else {
+		  return dtStart;
+	  }
   }
   
   public String getDtend(){
-	  return dtEnd;
+	  if (dtEnd == null){
+		  return dateEnd + "T" + timeEnd;
+	  }
+	  
+	  else {
+		  return dtEnd;
+	  }
   }
   
 
@@ -247,23 +259,30 @@ public class Event implements Comparator<Event>{
 	  fileName = x;
   }
   
-  public void setDtstart(){
-	  dtStart = convertToUTC(dateStart, timeStart);
+  public void setDtstart(){  
+	  dtStart = convertToUTC(dateStart, timeStart, tzid);
   }
   
   public void setDtend(){
-	  dtEnd = convertToUTC(dateEnd, timeEnd);
+	  dtEnd = convertToUTC(dateEnd, timeEnd, tzid);
   }
   
-  public String convertToUTC(String dateStartEnd, String timeStartEnd){
+  public String convertToUTC(String dateStartEnd, String timeStartEnd, String timezone){
 	  // String dateStartEnd should be set to either dateStart or dateEnd
 	  // String timeStartEnd should be set to either timeStart or timeEnd
+	  
+	  // If there is not tzid info, then UTC cannot be used
+	  if (tzid == null){
+		  return null;
+	  }
+	  
+	  System.out.println("end: " + dateEnd + timeEnd);
 	  
 	  SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
 	  int year, month, day, hrs, min, sec;
 	  //System.out.println(dateStart); //output looks like: 2015121200
 	  String date = dateStartEnd;
-	  
+	  // Separate year, month and date from dateStart or dateEnd
 	  year = Integer.parseInt(date.substring(0, 4));
 	  month = Integer.parseInt(date.substring(4, 6));
 	  day = Integer.parseInt(date.substring(6,8));
@@ -274,16 +293,15 @@ public class Event implements Comparator<Event>{
 	  
 	  String time = timeStartEnd;
 	  //System.out.println("timestart is: " + time);
-	  
+	  // Separate hrs and min from timeStart and timeEnd
 	  hrs = Integer.parseInt(time.substring(0, 2));
-	  min = Integer.parseInt(time.substring(2));
+	  min = Integer.parseInt(time.substring(2, 4));
 	  sec = 0;
-	  
 	  //System.out.println("time is: " + hrs + " " + min + " " + sec);
 	  
 	  Calendar utcCal = Calendar.getInstance();
 	  utcCal.set(year, month, day, hrs, min, sec);
-	  String tempDtstart = sdf.format(utcCal.getTime());
+	  //String tempDtstart = sdf.format(utcCal.getTime());
 	  //System.out.println("startCal is:" + tempDtstart);
 	  
 	  // Formats time as UTC -- will make working with timezones easier
@@ -292,20 +310,30 @@ public class Event implements Comparator<Event>{
 	  int offset = z.getRawOffset(); // checks offset from UTC
 	  if(z.inDaylightTime(new Date())){ //checks for daylightsavings (DST) time
 	  	offset = offset + z.getDSTSavings();
-	 }
+	  }
 	  int offsetHrs = offset / 1000 / 60 / 60;
 	  int offsetMins = offset / 1000 / 60 % 60;
 	  //System.out.println("offset: " + offsetHrs); // TESTING
 	  //System.out.println("offset: " + offsetMins); // TESTING
-
+	  //System.out.println("offset total: " + offset); //TESTING
+	  
 	  // Adjusts for offset from UTC, including DST
 	  utcCal.add(Calendar.HOUR_OF_DAY, (-offsetHrs));
 	  utcCal.add(Calendar.MINUTE, (-offsetMins));
 
+	   System.out.println("tzid is: " + tzid); //TESTING
+	  // Adjust for event in different timezone
+	  int tzidInt = Integer.parseInt(tzid);
+	  tzidInt /= 100;
+	  System.out.println("tzidInt is: " + tzidInt); //TESTING
+	  int tzidDiff = offsetHrs - tzidInt;
+	  System.out.println("tzidDiff = " + tzidDiff); //TESTING
+	  utcCal.add(Calendar.HOUR_OF_DAY,  (tzidDiff));
+	  
 	  // Formats UTC time in proper form
 	  String utc = sdf.format(utcCal.getTime());
 	  utc = utc.substring(0, utc.length());
-	  //System.out.println("UTC End Time: " + utc);
+	  System.out.println("UTC Time: " + utc);
 	  
 	  return utc;
   }

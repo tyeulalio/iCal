@@ -43,15 +43,45 @@ public class ReadFile {
 						decipher(currentLine, newEvent); // Deciphers information in line
 						currentLine = bufferedReader.readLine(); // Reads next line of file
 					}
-					// Need a filename for event to be output properly
-					newEvent.setFileName(newEvent.getTitle() + newEvent.getDateStart());
 					
+					
+					// Need a filename for event to be output properly
+					// Get first word of summary
+					String title = newEvent.getTitle();
+					int titleSpace = title.indexOf(' ');
+					String titleFirstWord, locationFirstWord;
+					if (titleSpace == -1)
+						titleFirstWord = title;
+					else 
+						titleFirstWord = title.substring(0, titleSpace);
+					// Get first word of location
+					String location = newEvent.getLocation();
+					int locationSpace = location.indexOf(' ');
+					if (locationSpace == -1)
+						locationFirstWord = location;
+					else 
+						locationFirstWord = location.substring(0, locationSpace);
+					if (locationFirstWord.length() > 2)
+						locationFirstWord = "_at_" + locationFirstWord;
+					newEvent.setFileName(titleFirstWord + locationFirstWord);
+					
+					
+					// If .ics file contained tzid in dtstart/dtend, must convert to offset time
+					if (newEvent.getTzid() != null){
+						//System.out.println("tzid is: " + newEvent.getTzid()); //TEST
+						Timezone timezone = new Timezone(newEvent.getTzid());
+						timezone.createArray();
+						//System.out.println("tzOffSet is: " + timezone.searchArray());	//TEST
+						newEvent.setTzid(Timezone.searchArray());
+					}
+					
+				    // Set Dtstart and Dtend only after timezone entry is known
+				    newEvent.setDtstart();
+				    newEvent.setDtend();
 					
 					//tests list
-					calendar.add(newEvent);
-					
-				}
-				
+					calendar.add(newEvent);					
+				}				
 			}
 			
 			// Close files
@@ -99,15 +129,19 @@ public class ReadFile {
 		case "DTSTART":
 			int indexOfColon = propertyData.indexOf(':');
 			// checking format of dtstart
+			// There are 3 formats that dtstart might be in
+			// dtStart might look like this: DTSTART;TZID=US-Eastern:19980119T020000
 			if ((propertyData.substring(0,4)).equals("TZID")){
 				int indexOfEqual = propertyData.indexOf('=');
 				String tzid = propertyData.substring(indexOfEqual+1, indexOfColon);
 				newEvent.setTzid(tzid);
 				//System.out.print("Event tzid is: " + newEvent.getTzid());
-				propertyData = propertyData.substring(indexOfColon);
+				propertyData = propertyData.substring(indexOfColon+1);
 			}
 			
-			// DTSTART looks like this: 20150807T130000
+			// DTSTART might look like: DTSTART:19980119T070000Z
+			
+			// DTSTART might look like this: DTSTART:20150807T130000
 			// Numbers before 'T' is dateStart
 			// Numbers after 'T' is timeStart
 			int indexOfT = propertyData.indexOf('T');
@@ -129,7 +163,7 @@ public class ReadFile {
 				String tzid = propertyData.substring(indexOfEqual+1, indexOfColon);
 				newEvent.setTzid(tzid);
 				// System.out.print("Event tzid is: " + newEvent.getTzid());
-				propertyData = propertyData.substring(indexOfColon);
+				propertyData = propertyData.substring(indexOfColon+1);
 			}
 			
 			// DTEND looks like this: 20150807T130000

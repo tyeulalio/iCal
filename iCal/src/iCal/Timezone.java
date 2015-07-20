@@ -12,6 +12,7 @@ public class Timezone {
 	private static String offSetFrom = "-1000";
 	private static String offSetTo = "-1000";
 	private static String tzName = "HST";
+	private static String[][] tzArray = new String[87][2]; //87 = number of time zones, 2 = timezone UTC offset & timezone name
 	
 	//CONSTRUCTOR
 	public Timezone(String id){
@@ -46,7 +47,7 @@ public class Timezone {
 	//creates an array with timezones so that information can be used
 	//when reading in files
 	public static void createArray(){
-		String[][] tzArray = new String[87][2]; //87 = number of time zones, 2 = timezone UTC offset & timezone name
+		
 		String fileName = "timezones.txt"; //file with timezones listed
 		String currentLine = "";
 		int count = 0;
@@ -87,6 +88,15 @@ public class Timezone {
 		catch(IOException ex2){
 			System.out.println("Error reading file '" + fileName + "'.");
 		}
+	}
+	
+	public static String searchArray(){
+		int i=0;
+		while (!tzid.equals(tzArray[i][1])){
+			i++;
+		}
+		offSetFrom = tzArray[i][0];
+		return offSetFrom;
 	}
 }
 
