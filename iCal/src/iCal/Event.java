@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Comparator;
 import java.util.TimeZone;
+import java.util.UUID;
 
 public class Event implements Comparator<Event>{
 	private String title; //SUMMARY
@@ -26,17 +27,20 @@ public class Event implements Comparator<Event>{
 	private String fileName;
 	
 
-  //////////////////////////////////////////////////////////////
-	   /// ** constructors ** 
-	   //////////////////////////////////////////////////////////////
-	   //////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+/// ** constructors ** 
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 	public Event() {
 		title = "";
 		description = "";
 		comment = "";
-		String classType = "Public";
+		setClassType("Public");
 		dateCreated = getDateTime();
 		fileName = null;
+		UUID idOne = UUID.randomUUID();
+		setUUID(idOne.toString());
+		location = "";
 	}
 	
 	public Event(String titlex, String descriptx, 
@@ -50,10 +54,13 @@ public class Event implements Comparator<Event>{
 		timeStart = timeStartx;
 		timeEnd = timeEndx;
 		comment = "";
-		String classType = "Public";
+		setClassType("Public");
 		longitude = longx;
 		latitude = latx;
 		fileName = filex;
+		UUID idOne = UUID.randomUUID();
+		setUUID(idOne.toString());
+		location = "";
 	}
 	
    //////////////////////////////////////////////////////////////
