@@ -3,7 +3,6 @@ package iCal;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.util.TimeZone;
-import java.util.UUID;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -106,15 +105,14 @@ public static void displayMenu() throws IOException {
         
      // 5. Test export
         else if (choice.equalsIgnoreCase("Export") || choice.equals("5")) {
-          //Event(String titlex, String descriptx, String dateStartx, String dateEndx, String timeStartx, String timeEndx) {
-        	Event test5 = new Event ("School", "Not fun", "20150714", "20150714", "1400", "1430", +2, -9, "school");
-        	Event test6 = new Event ("Concert", "Very fun", "20150714", "20150714", "1900", "2100", 100, -19, "concert");
-        	cal.add(test5);
-        	cal.add(test6);
+        	//Event test5 = new Event ("School", "Not fun", "20150715", "20150715", "1400", "1430", +2, -9, "school");
+        	//Event test6 = new Event ("Concert", "Very fun", "20150716", "20150716", "1900", "2100", 100, -19, "concert");
+        	//cal.add(test5);
+        	//cal.add(test6);
         	cal.calcGCD();
         	displayCal(cal);
         	for (int i = 0; i < cal.size(); i++){
-        		writeIcs(cal.getNode(i));	
+        		writeIcs(cal.getNode(i));	// traverses the calendar and writes to file
         	}
         }
         // 10. Quit program  
@@ -193,10 +191,6 @@ public static void displayMenu() throws IOException {
     // Date modified
     event1.setDtstamp(event1.getDateTime());
 
-    // UUID (Randomly generates number here, followed by @Himalian.com)
-    UUID idOne = UUID.randomUUID();
-    event1.setUUID(idOne.toString());
-    
     // Location
     System.out.print("Enter event's location (optional; press Enter to continue): ");
     event1.setLocation(scan.nextLine());
@@ -282,7 +276,7 @@ public static void displayMenu() throws IOException {
   private static void displayTimeZone() {
 	  System.out.println("=======Timezone (UTC) ======");
 	    String format = "%-76s%s%n";
-	    String format2 = "%-76s%n";
+	    String format2 = "%-70s%n";
 	    
 	    String prefix1 = "(UTC-1000) Hawaii";
 	    String prefix2 = "(UTC+0300) Nairobi";
@@ -596,20 +590,26 @@ public static void displayMenu() throws IOException {
 	    return filename;
   }
   public static void displayCal(EventLinkedList<Event> cal) {
-	  for (int i = 0; i < 60; i++)
+	  for (int i = 0; i < 45; i++)
 	  {
-		  System.out.print("~");
+		  System.out.print("=");
 	  }
-	  System.out.print("CALENDAR");
-	  for (int i = 0; i < 60; i++)
+	  System.out.print(" CALENDAR ");
+	  for (int i = 0; i < 45; i++)
 	  {
-		  System.out.print("~");
+		  System.out.print("=");
 	  }
 	  System.out.print("\n");
-	  System.out.println(cal);
-	  for (int i = 0; i < 128; i++)
+	  if (cal.size() > 0) {
+		  System.out.println(cal);
+	  }
+	  else {
+		  System.out.println("[No events in calendar]");
+	  }
+		  
+	  for (int i = 0; i < 100; i++)
 	  {
-		  System.out.print("-");
+		  System.out.print("=");
 	  }
 	  System.out.print("\n");
 	  
