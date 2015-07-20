@@ -105,10 +105,6 @@ public static void displayMenu() throws IOException {
         
      // 5. Test export
         else if (choice.equalsIgnoreCase("Export") || choice.equals("5")) {
-        	//Event test5 = new Event ("School", "Not fun", "20150715", "20150715", "1400", "1430", +2, -9, "school");
-        	//Event test6 = new Event ("Concert", "Very fun", "20150716", "20150716", "1900", "2100", 100, -19, "concert");
-        	//cal.add(test5);
-        	//cal.add(test6);
         	cal.calcGCD();
         	displayCal(cal);
         	for (int i = 0; i < cal.size(); i++){
@@ -551,7 +547,7 @@ public static void displayMenu() throws IOException {
 	    pw.printf("%s%n", "CREATED:" + event1.getDateCreated());//time created stamp
 	  
 	    pw.printf("%s%s%n", "DESCRIPTION:", event1.getDescription());//description
-	    //pw.printf("%s%S%n", "COMMENT:", event1.getComment()); //comment   
+	    pw.printf("%s%S%n", "COMMENT:", event1.getComment()); //comment   
 	    //pw.printf("%s%s%n", "LAST-MODIFIED:", event1.getDateModified());//time modified stamp -- we don't need last-modified, same as dtstamp
 	    pw.printf("%s%s%n", "LOCATION:", event1.getLocation());//location variable
 	    pw.printf("%s%.6f;%.6f%n", "GEO:", event1.getLatitude(), event1.getLongitude());//need this for assignment requirement 
