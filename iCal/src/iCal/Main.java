@@ -149,6 +149,9 @@ public class Main {
 										+ "Try importing or creating an event first. *\n");
 					}
 				}
+			
+				
+				
 				// 10. Quit program
 				else if (choice.equalsIgnoreCase("Quit") || choice.equals("10")) {
 					System.out.print("Have a nice day.");
