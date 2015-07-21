@@ -3,9 +3,7 @@ package iCal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.Comparator;
 import java.util.TimeZone;
 import java.util.UUID;
@@ -302,15 +300,12 @@ public class Event implements Comparator<Event>{
 	  sec = 0;
 	  //System.out.println("time is: " + hrs + " " + min + " " + sec);
 	  
-	  TimeZone timeZone = TimeZone.getTimeZone("UTC");
-	  Calendar utcCal = Calendar.getInstance(timeZone);
+	  Calendar utcCal = Calendar.getInstance();
 	  utcCal.set(year, month, day, hrs, min, sec);
 	  //String tempDtstart = sdf.format(utcCal.getTime());
 	  //System.out.println("startCal is:" + tempDtstart);
 	  
 	  //System.out.println("utcCal's month is: " + utcCal.get(Calendar.MONTH)); //this test works
-	  sdf.setTimeZone(timeZone);
-	  
 	  
 	  // Formats time as UTC -- will make working with timezones easier
 	  //System.out.println("current: "+ sdf.format(cal.getTime())); // test print current time
@@ -349,7 +344,6 @@ public class Event implements Comparator<Event>{
 	  String utc = sdf.format(utcCal.getTime());
 	  utc = utc.substring(0, utc.length());
 	  //System.out.println("UTC Time: " + utc);
-	  
 	  
 	  return utc;
   }
