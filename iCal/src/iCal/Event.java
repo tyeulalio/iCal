@@ -3,6 +3,7 @@ package iCal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Comparator;
@@ -269,12 +270,12 @@ public class Event implements Comparator<Event>{
 	  dtEnd = convertToUTC(dateEnd, timeEnd, tzid);
   }
   
-  public String convertToUTC(String dateStartEnd, String timeStartEnd, String timezone){
+  public static String convertToUTC(String dateStartEnd, String timeStartEnd, String timezone){
 	  // String dateStartEnd should be set to either dateStart or dateEnd
 	  // String timeStartEnd should be set to either timeStart or timeEnd
 	  
 	  // If there is not tzid info, then UTC cannot be used
-	  if (tzid == null){
+	  if (timezone == null){
 		  return null;
 	  }
 	  
@@ -301,10 +302,15 @@ public class Event implements Comparator<Event>{
 	  sec = 0;
 	  //System.out.println("time is: " + hrs + " " + min + " " + sec);
 	  
-	  Calendar utcCal = Calendar.getInstance();
+	  TimeZone timeZone = TimeZone.getTimeZone("UTC");
+	  Calendar utcCal = Calendar.getInstance(timeZone);
 	  utcCal.set(year, month, day, hrs, min, sec);
 	  //String tempDtstart = sdf.format(utcCal.getTime());
 	  //System.out.println("startCal is:" + tempDtstart);
+	  
+	  //System.out.println("utcCal's month is: " + utcCal.get(Calendar.MONTH)); //this test works
+	  sdf.setTimeZone(timeZone);
+	  
 	  
 	  // Formats time as UTC -- will make working with timezones easier
 	  //System.out.println("current: "+ sdf.format(cal.getTime())); // test print current time
@@ -322,20 +328,28 @@ public class Event implements Comparator<Event>{
 	  // Adjusts for offset from UTC, including DST
 	  utcCal.add(Calendar.HOUR_OF_DAY, (-offsetHrs));
 	  utcCal.add(Calendar.MINUTE, (-offsetMins));
+	  
+	  //System.out.println("utc 2nd month check: " + utcCal.get(Calendar.MONTH)); //works
+	  //System.out.println("utc getTime format check: " + utcCal.getTime());
 
-	   //System.out.println("tzid is: " + tzid); //TESTING
+	  //System.out.println("tzid is: " + timezone); //TESTING
 	  // Adjust for event in different timezone
-	  int tzidInt = Integer.parseInt(tzid);
+	  int tzidInt = Integer.parseInt(timezone);
 	  tzidInt /= 100;
 	  //System.out.println("tzidInt is: " + tzidInt); //TESTING
 	  int tzidDiff = offsetHrs - tzidInt;
 	  //System.out.println("tzidDiff = " + tzidDiff); //TESTING
 	  utcCal.add(Calendar.HOUR_OF_DAY,  (tzidDiff));
 	  
+	  utcCal.add(Calendar.MONTH, (-1));
+	  //System.out.println("utc getTime is: " + utcCal.getTime()); //doesn't work
+	  //System.out.println("utc sfd format is: " + sdf.format(utcCal.getTime()));
+	  
 	  // Formats UTC time in proper form
 	  String utc = sdf.format(utcCal.getTime());
 	  utc = utc.substring(0, utc.length());
 	  //System.out.println("UTC Time: " + utc);
+	  
 	  
 	  return utc;
   }
