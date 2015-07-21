@@ -342,7 +342,7 @@ public class Event implements Comparator<Event>{
   
   @Override
   public String toString() {
-    return "Title:\t" + title + " \t\tDate:\t" + dateStart + " \tTime:\t" + timeStart + "\n\t\t\tComment: " + comment;
+    return "Title:\t" + title + " \t\tDate:\t" + dateStart + " \tTime:\t" + timeStart.substring(0, 4) + "\n\t\t\tComment: " + comment;
   }
 
   /**
