@@ -42,7 +42,7 @@ public class Event implements Comparator<Event>{
 		dateCreated = getDateTime();
 		fileName = null;
 		UUID idOne = UUID.randomUUID();
-		setUUID(idOne.toString());
+		setUUID(idOne.toString() + "@Himalia.com");
 		location = "";
 	}
 	
@@ -62,7 +62,7 @@ public class Event implements Comparator<Event>{
 		latitude = latx;
 		fileName = filex;
 		UUID idOne = UUID.randomUUID();
-		setUUID(idOne.toString());
+		setUUID(idOne.toString() + "@Himalia.com");
 		location = "";
 	}
 	
@@ -356,7 +356,7 @@ public class Event implements Comparator<Event>{
   
   @Override
   public String toString() {
-    return "Title:\t" + title + " \t\tDate:\t" + dateStart + " \tTime:\t" + timeStart + "\n\t\t\tComment: " + comment;
+    return "Title:\t" + title + " \t\tDate:\t" + dateStart + " \tTime:\t" + timeStart.substring(0, 4) + "\n\t\t\tComment: " + comment;
   }
 
   /**
