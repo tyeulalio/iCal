@@ -114,7 +114,7 @@ public static void displayMenu() throws IOException {
 	        	}
         	}
         	else {
-        		System.out.println("\n* There is nothing to export in the calendar. "
+        		System.out.println("\n* Sorry! There is nothing to export in the calendar. "
         				+ "Try importing or creating an event first. *\n");
         	}
         }
