@@ -25,7 +25,6 @@ public class Main {
 		EventLinkedList<Event> cal = new EventLinkedList<Event>();
 		Comparator c = (Comparator) new Event();
 		String choice = "";
-		TestMode t = new TestMode();
 		
 		// This is used to text Timezone.java
 		// Timezone.java will be used when reading in event files
@@ -41,7 +40,7 @@ public class Main {
 						.print("################  MENU: ################\n"
 								+ "1)  CREATE an event file & add to calendar\n"
 								+ "2)  IMPORT .ics file to calendar\n"
-								+ "3)  TEST \n"
+								+ "3)  TEST MODE: " + TestMode.getTestMode() + "\n"
 								+ "4)  VIEW calendar\n"
 								+ "5)  EXPORT events in calendar\n"
 								+ "10) QUIT"
