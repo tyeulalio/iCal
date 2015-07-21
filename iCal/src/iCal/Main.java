@@ -122,10 +122,7 @@ public static void displayMenu() throws IOException {
                   	  testAnswer = keyboard.nextLine();
                     }
         		}
-        	}
-        		
-        	
-              
+        	}     
         }
         
         // 4. View calendar linked list
@@ -167,11 +164,11 @@ public static void displayMenu() throws IOException {
   
   
   
-  
   // This method gathers data from the User
   public static Event gatherData() throws IOException {
     Scanner scan = new Scanner(System.in);
     Event event1 = new Event();    
+    
     // Event's title
     System.out.print("Enter the event's title: ");
     event1.setTitle(scan.nextLine());
@@ -299,7 +296,7 @@ public static void displayMenu() throws IOException {
     System.out.println("DTEND:" + event1.getTimeEnd());
     System.out.printf("GEO:%.6f; %.6f\n", event1.getLatitude(), event1.getLongitude());
     System.out.print("CLASS:" + classification + "\n");
-    System.out.print("UID:" + event1.getUUID() + "@Himalia.com\n");
+    System.out.print("UID:" + event1.getUUID() + "\n");
     //System.out.println("COMMENT:" + event1.getComment());
     System.out.println("=================================");
     
@@ -557,7 +554,7 @@ public static void displayMenu() throws IOException {
   private static void writeIcs(Event event1) throws IOException
   {
     	PrintWriter pw = new PrintWriter(new FileWriter((event1.getFileName() +".ics"), false));
-	 		
+
 	    //Header info
 	    pw.printf("%s%n", "BEGIN:VCALENDAR");
 	    pw.printf("%s%n", "PRODID:-//Team Himalia//iCalendar Assignment//EN");
@@ -579,7 +576,7 @@ public static void displayMenu() throws IOException {
 	    pw.printf("%s%s%n", "DTSTART:", event1.getDtstart());//start time
 	    pw.printf("%s%s%n", "DTEND:", event1.getDtend());//end time
 	    pw.printf("%s%s%n", "DTSTAMP:", event1.getDateCreated());//time stamp
-	    pw.printf("%s%n", "UID:" + event1.getUUID() + "@Himalia.com");//need unique id
+	    pw.printf("%s%n", "UID:" + event1.getUUID());//need unique id
 	    pw.printf("%s%s%n", "CLASS:", event1.getClassType());//classification 
 	    pw.printf("%s%n", "CREATED:" + event1.getDateCreated());//time created stamp
 	  
