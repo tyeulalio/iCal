@@ -21,6 +21,7 @@ public class EventTest {
 		assertEquals("20161023T110000Z", nukuTz);
 	}
 	
-	
+	//@Test
+	//public void test
 
 }
