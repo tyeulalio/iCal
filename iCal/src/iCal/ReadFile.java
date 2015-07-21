@@ -65,6 +65,9 @@ public class ReadFile {
 						locationFirstWord = "_at_" + locationFirstWord;
 					newEvent.setFileName(titleFirstWord + locationFirstWord);
 					
+					// Use this to rewrite onto import file
+					// newEvent.setFileName(fileName);
+					
 					
 					// If .ics file contained tzid in dtstart/dtend, must convert to offset time
 					if (newEvent.getTzid() != null){
