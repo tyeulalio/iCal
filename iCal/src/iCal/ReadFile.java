@@ -199,6 +199,8 @@ public class ReadFile {
 			//System.out.println("Event date created is: " + newEvent.getDateCreated());
 			break;
 		case "LOCATION":
+			if (propertyData == null)
+				newEvent.setLocation("");
 			newEvent.setLocation(propertyData);
 			break;
 		case "GEO":
