@@ -9,7 +9,7 @@ public class TestMode {
 	}
 	
 	// For printing the status of TestMode
-	public String toString() {
+	public String makeString() {
 		if (testMode==false) {
 			return ("OFF");
 		}

@@ -25,7 +25,6 @@ public static void displayMenu() throws IOException {
   EventLinkedList<Event> cal = new EventLinkedList<Event>();
   Comparator c = (Comparator) new Event();
   String choice = "";
-  TestMode t = new TestMode();
   
   //This is used to text Timezone.java
   //Timezone.java will be used when reading in event files
@@ -40,7 +39,7 @@ public static void displayMenu() throws IOException {
 			System.out.print("################  MENU: ################\n" +
 	              "1)  CREATE an event file & add to calendar\n" +
 	              "2)  IMPORT .ics file to calendar\n" +
-	              "3)  TEST MODE: " + t.toString() + "\n" +
+	              "3)  TEST MODE: " + TestMode.getTestMode() + "\n" +
 	              "4)  VIEW calendar\n" +
 	              "5)  EXPORT events in calendar\n" +
 	              "10) QUIT"
@@ -75,10 +74,6 @@ public static void displayMenu() throws IOException {
         	
         	  ReadFile read = new ReadFile(fullFileName, cal);
         	  read.ReadFile();
-        	  
-        	  
-        	  
-        	  // The next 3 lines are being used to test ReadFile
         	  cal.insertionSort(c);
         	  cal.calcGCD();
         	  displayCal(cal);
@@ -87,12 +82,12 @@ public static void displayMenu() throws IOException {
         // 3. Creates several events for testing
         else if (choice.equalsIgnoreCase("Test") || choice.equals("3")) {
         	boolean proceedTest = false;
-        	if (t.getTestMode() == false) {
+        	if (TestMode.getTestMode() == false) {
         		System.out.print("Test Mode is OFF. Are you sure you want to turn it ON? (Y/N): ");
         		while (!proceedTest) {
         			String testAnswer = keyboard.nextLine();
                     if (testAnswer.equalsIgnoreCase("Y") || testAnswer.equalsIgnoreCase("Y")) {
-                  	  t.setTestMode();
+                  	  TestMode.setTestMode();
                   	  proceedTest = true;
                   	  System.out.println("\n * Test Mode was turned ON. *\n");
                     }
@@ -110,7 +105,7 @@ public static void displayMenu() throws IOException {
         		while (!proceedTest) {
         			String testAnswer = keyboard.nextLine();
         			if (testAnswer.equalsIgnoreCase("Yes") || testAnswer.equalsIgnoreCase("Y")) {
-                  	  t.setTestMode();
+        				TestMode.setTestMode();
                   	  proceedTest = true;
                   	  System.out.println("\n * Test Mode was turned OFF. *\n");
                     }
