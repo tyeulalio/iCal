@@ -26,7 +26,8 @@ public class Main {
 		EventLinkedList<Event> cal = new EventLinkedList<Event>();
 		Comparator c = (Comparator) new Event();
 		String choice = "";
-
+		TestMode t = new TestMode();
+		
 		// This is used to text Timezone.java
 		// Timezone.java will be used when reading in event files
 		// Timezone timezone = new Timezone("Hawaii");
@@ -88,25 +89,44 @@ public class Main {
 
 				// 3. Creates several events for testing
 				else if (choice.equalsIgnoreCase("Test") || choice.equals("3")) {
-					// Event(String titlex, String descriptx, String dateStartx,
-					// String dateEndx, String timeStartx, String timeEndx) {
-					Event test1 = new Event("Work", "Not fun", "20150714",
-							"20150714", "140000", "143000", 22, 114, "testing1");
-					Event test2 = new Event("Study ICS 314",
-							"Because I need to", "20150714", "20150714",
-							"150000", "153000", 9, -7, "testing2");
-					Event test3 = new Event("Dinner Party", "Kev's Birthday",
-							"20150714", "20150714", "160000", "153000", -19,
-							70, "testing3");
-
-					cal.add(test1);
-					cal.add(test3);
-					cal.add(test2);
-					cal.insertionSort(c);
-					cal.calcGCD();
-					displayCal(cal);
-				}
-
+		        	boolean proceedTest = false;
+		        	if (t.getTestMode() == false) {
+		        		System.out.print("Test Mode is OFF. Are you sure you want to turn it ON? (Y/N): ");
+		        		while (!proceedTest) {
+		        			String testAnswer = keyboard.nextLine();
+		                    if (testAnswer.equalsIgnoreCase("Y") || testAnswer.equalsIgnoreCase("Y")) {
+		                  	  t.setTestMode();
+		                  	  proceedTest = true;
+		                  	  System.out.println("\n * Test Mode was turned ON. *\n");
+		                    }
+		                    else if (testAnswer.equalsIgnoreCase("No") || testAnswer.equalsIgnoreCase("N")) {
+		                  	  proceedTest = true;
+		                    }
+		                    else {
+		                  	  System.out.print("Type \'Y\' or \'N\' to whether you want to Test Mode:");
+		                  	  testAnswer = keyboard.nextLine();
+		                    }
+		        		}
+		        	}
+		        	else {
+		        		System.out.print("Test Mode is ON. Are you sure you want to turn it OFF? (Y/N): ");
+		        		while (!proceedTest) {
+		        			String testAnswer = keyboard.nextLine();
+		        			if (testAnswer.equalsIgnoreCase("Yes") || testAnswer.equalsIgnoreCase("Y")) {
+		                  	  t.setTestMode();
+		                  	  proceedTest = true;
+		                  	  System.out.println("\n * Test Mode was turned OFF. *\n");
+		                    }
+		        			else if (testAnswer.equalsIgnoreCase("No") || testAnswer.equalsIgnoreCase("N")) {
+		                  	  proceedTest = true;
+		                    }
+		                    else {
+		                  	  System.out.print("Type \'Y\' or \'N\' to whether you want to use Test Mode:");
+		                  	  testAnswer = keyboard.nextLine();
+		                    }
+		        		}
+		        	}     
+		        }
 				// 4. View calendar linked list
 				else if (choice.equalsIgnoreCase("View") || choice.equals("4")) {
 					displayCal(cal);
