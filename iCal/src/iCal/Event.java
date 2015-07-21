@@ -41,7 +41,7 @@ public class Event implements Comparator<Event>{
 		dateCreated = getDateTime();
 		fileName = null;
 		UUID idOne = UUID.randomUUID();
-		setUUID(idOne.toString());
+		setUUID(idOne.toString() + "@Himalia.com");
 		location = "";
 	}
 	
@@ -61,7 +61,7 @@ public class Event implements Comparator<Event>{
 		latitude = latx;
 		fileName = filex;
 		UUID idOne = UUID.randomUUID();
-		setUUID(idOne.toString());
+		setUUID(idOne.toString() + "@Himalia.com");
 		location = "";
 	}
 	
