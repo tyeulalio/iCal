@@ -105,10 +105,17 @@ public static void displayMenu() throws IOException {
         
      // 5. Test export
         else if (choice.equalsIgnoreCase("Export") || choice.equals("5")) {
-        	cal.calcGCD();
-        	displayCal(cal);
-        	for (int i = 0; i < cal.size(); i++){
-        		writeIcs(cal.getNode(i));	// traverses the calendar and writes to file
+        	// Verifies calendar is not empty
+        	if (cal.size()!=0) {
+				cal.calcGCD();
+				displayCal(cal);
+	        	for (int i = 0; i < cal.size(); i++){
+	        		writeIcs(cal.getNode(i));	// traverses the calendar and writes to file
+	        	}
+        	}
+        	else {
+        		System.out.println("\n* There is nothing to export in the calendar. "
+        				+ "Try importing or creating an event first. *\n");
         	}
         }
         // 10. Quit program  
