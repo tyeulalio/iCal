@@ -1,7 +1,7 @@
 package iCal;
 
 public class TestMode {
-	public static boolean testMode = false;
+	public static boolean testMode = true;
 	
 	// Returns the status of TestMode
 	public static boolean getTestMode() {
