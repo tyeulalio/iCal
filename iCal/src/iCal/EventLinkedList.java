@@ -133,28 +133,32 @@ public class EventLinkedList<E> {
 	 * calculates the great circle distance between two events
 	 */
 	public void calcGCD() {
-		DLinkedNode<Event> node = (DLinkedNode<Event>) head.next;
-		while (!node.next.equals(tail)) {
-			if (node.data.getDateStart().equals(node.next.data.getDateStart())) {
-				Double lat1 = (double) node.data.getLatitude();
-				Double long1 = (double) node.data.getLongitude();
-				Double lat2 = (double) node.next.data.getLatitude();
-				Double long2 = (double) node.next.data.getLongitude();
-				if (lat1 != null && long1 != null && lat2 != null
-						&& long2 != null) {
-					float miles, km;
-					miles = (float) (3963 * Math.acos(Math.cos(lat1)
-							* Math.cos(lat2) * Math.cos(long1 - long2)
-							+ Math.sin(lat1) * Math.sin(lat2)));
-					km = (float) (miles * 1.60934);
+	    DLinkedNode<Event> node = (DLinkedNode<Event>) head.next;
+	    while(!node.next.equals(tail)) {
+	      if(node.data.getDateStart().equals(node.next.data.getDateStart())) {
+	        Double lat1 = (double) node.data.getLatitude();
+	        Double long1 = (double) node.data.getLongitude();
+	        Double lat2 = (double) node.next.data.getLatitude();
+	        Double long2 = (double) node.next.data.getLongitude();
+	        if(lat1 != null && long1 != null && lat2 != null && long2 != null) {
+	          float dist, km;
+	          double earthRadius = 3958.75; // miles (or 6371.0 kilometers)
+			      double dLat = Math.toRadians(lat2-lat1);
+			      double dLng = Math.toRadians(long2-long1);
+			      double sindLat = Math.sin(dLat / 2);
+			      double sindLng = Math.sin(dLng / 2);
+			      double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
+			        	            * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+			      double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+			      dist = (float) (earthRadius * c);
+			      km = (float) (dist * 1.60934);
 
-					node.data
-							.setComment("The great circle distance to your next event is "
-									+ miles + " miles(or " + km + "km).");
-				}
-			}
-			node = node.next;
-		}
+	          
+	          node.data.setComment("The great circle distance to your next event is " + dist + " miles(or " + km + "km).");    
+	        }
+	      }
+	      node = node.next;
+	    }
 	}
 
 }
