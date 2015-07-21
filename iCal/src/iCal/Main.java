@@ -15,10 +15,9 @@ import java.util.Date;
 public class Main {
 
 	private static Scanner scan;
-
+  
 	public static void main(String[] args) throws IOException {
 		displayMenu();
-
 	}
 
 	public static void displayMenu() throws IOException {
@@ -26,7 +25,6 @@ public class Main {
 		EventLinkedList<Event> cal = new EventLinkedList<Event>();
 		Comparator c = (Comparator) new Event();
 		String choice = "";
-		TestMode t = new TestMode();
 		
 		// This is used to text Timezone.java
 		// Timezone.java will be used when reading in event files
@@ -42,7 +40,7 @@ public class Main {
 						.print("################  MENU: ################\n"
 								+ "1)  CREATE an event file & add to calendar\n"
 								+ "2)  IMPORT .ics file to calendar\n"
-								+ "3)  TEST \n"
+								+ "3)  TEST MODE: " + TestMode.getTestMode() + "\n"
 								+ "4)  VIEW calendar\n"
 								+ "5)  EXPORT events in calendar\n"
 								+ "10) QUIT"
@@ -90,12 +88,12 @@ public class Main {
 				// 3. Creates several events for testing
 				else if (choice.equalsIgnoreCase("Test") || choice.equals("3")) {
 		        	boolean proceedTest = false;
-		        	if (t.getTestMode() == false) {
+		        	if (TestMode.getTestMode() == false) {
 		        		System.out.print("Test Mode is OFF. Are you sure you want to turn it ON? (Y/N): ");
 		        		while (!proceedTest) {
 		        			String testAnswer = keyboard.nextLine();
 		                    if (testAnswer.equalsIgnoreCase("Y") || testAnswer.equalsIgnoreCase("Y")) {
-		                  	  t.setTestMode();
+		                  	  TestMode.setTestMode();
 		                  	  proceedTest = true;
 		                  	  System.out.println("\n * Test Mode was turned ON. *\n");
 		                    }
@@ -113,7 +111,7 @@ public class Main {
 		        		while (!proceedTest) {
 		        			String testAnswer = keyboard.nextLine();
 		        			if (testAnswer.equalsIgnoreCase("Yes") || testAnswer.equalsIgnoreCase("Y")) {
-		                  	  t.setTestMode();
+		        				TestMode.setTestMode();
 		                  	  proceedTest = true;
 		                  	  System.out.println("\n * Test Mode was turned OFF. *\n");
 		                    }
@@ -127,45 +125,43 @@ public class Main {
 		        		}
 		        	}     
 		        }
-				// 4. View calendar linked list
-				else if (choice.equalsIgnoreCase("View") || choice.equals("4")) {
-					displayCal(cal);
-				}
-
-				// 5. Test export
-				else if (choice.equalsIgnoreCase("Export")
-						|| choice.equals("5")) {
-					// Verifies calendar is not empty
-					if (cal.size() != 0) {
+		        
+		        // 4. View calendar linked list
+		        else if (choice.equalsIgnoreCase("View") || choice.equals("4")) {
+		        	displayCal(cal);
+		        }
+		        
+		     // 5. Export
+		        else if (choice.equalsIgnoreCase("Export") || choice.equals("5")) {
+		        	// Verifies calendar is not empty
+		        	if (cal.size()!=0) {
 						cal.calcGCD();
 						displayCal(cal);
-						for (int i = 0; i < cal.size(); i++) {
-							writeIcs(cal.getNode(i)); // traverses the calendar
-														// and writes to file
-						}
-					} else {
-						System.out
-								.println("\n* Sorry! There is nothing to export in the calendar. "
-										+ "Try importing or creating an event first. *\n");
-					}
-				}
-			
-				
-				
-				// 10. Quit program
-				else if (choice.equalsIgnoreCase("Quit") || choice.equals("10")) {
-					System.out.print("Have a nice day.");
-				}
-			} catch (Exception e) {
-				// Error message
-				System.out
-						.println("Some kind of error occurred. (Press any key then Enter continue.)");
-				keyboard.next(); // Clear the input buffer
-			} finally {
-			}
-		} while (!(choice.equalsIgnoreCase("Quit")) && !(choice.equals("10")));
-
-	}
+			        	for (int i = 0; i < cal.size(); i++){
+			        		writeIcs(cal.getNode(i));	// traverses the calendar and writes to file
+			        	}
+		        	}
+		        	else {
+		        		System.out.println("\n* Sorry! There is nothing to export in the calendar. "
+		        				+ "Try importing or creating an event first. *\n");
+		        	}
+		        }
+		        // 10. Quit program  
+		        else if (choice.equalsIgnoreCase("Quit") || choice.equals("10")) {
+		          System.out.print("Have a nice day.");
+		        }
+		    }
+		    catch (Exception e) {
+		  	  // Error message
+		  	  System.out.println("Some kind of error occurred. (Press any key then Enter continue.)");
+		  	  keyboard.next();                   // Clear the input buffer    
+		    }
+		    finally {
+		    }
+		  } while (!(choice.equalsIgnoreCase("Quit")) && !(choice.equals("10")));
+		    
+		    
+		}
 
 	// This method gathers data from the User
 	public static Event gatherData() throws IOException {
