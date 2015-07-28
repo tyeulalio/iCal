@@ -339,7 +339,7 @@ public class Main {
 		System.out.printf("GEO:%.6f; %.6f\n", event1.getLatitude(),
 				event1.getLongitude());
 		System.out.print("CLASS:" + classification + "\n");
-		System.out.print("UID:" + event1.getUUID() + "@Himalia.com\n");
+		System.out.print("UID:" + event1.getUUID() + "\n");
 		// System.out.println("COMMENT:" + event1.getComment());
 		System.out.println("=================================");
 
@@ -617,7 +617,7 @@ public class Main {
 		pw.printf("%s%s%n", "DTSTART:", event1.getDtstart());// start time
 		pw.printf("%s%s%n", "DTEND:", event1.getDtend());// end time
 		pw.printf("%s%s%n", "DTSTAMP:", event1.getDateCreated());// time stamp
-		pw.printf("%s%n", "UID:" + event1.getUUID() + "@Himalia.com");// need
+		pw.printf("%s%n", "UID:" + event1.getUUID());// need
 																		// unique
 																		// id
 		pw.printf("%s%s%n", "CLASS:", event1.getClassType());// classification
