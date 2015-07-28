@@ -228,8 +228,8 @@ public class ReadFile {
 			newEvent.setLongitude(longitude);
 			
 			// Next 2 lines text geo
-			System.out.printf("Event's lat is: %.6f%n", newEvent.getLatitude());
-			System.out.printf("Event's lon is: %.6f%n", newEvent.getLongitude());
+			//System.out.printf("Event's lat is: %.6f%n", newEvent.getLatitude());
+			//System.out.printf("Event's lon is: %.6f%n", newEvent.getLongitude());
 			break;		
 		default: 
 			// System.out.println("Non-summary lines found too");
