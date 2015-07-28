@@ -217,11 +217,11 @@ public class Event implements Comparator<Event>{
 	}
 	
 	public void setDateStart(String x) {
-		dateStart = x + "00";
+		dateStart = x; //+ "00";
 	}
 	
 	public void setDateEnd(String x) {
-		dateEnd = x + "00";
+		dateEnd = x; //+ "00";
 	}
 	
 	public void setTimeStart(String x) {
