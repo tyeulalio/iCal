@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class ReadFile {
 	private String fileName;
@@ -18,6 +19,7 @@ public class ReadFile {
 	
 	// This method will actually read the input of the file	
 	public void ReadFile(){
+		Scanner keyboard = new Scanner(System.in);
 		// Receives input from user about the file to be read
 		try {
 			// FileReader will read the text file
@@ -45,30 +47,6 @@ public class ReadFile {
 					}
 					
 					
-					// Need a filename for event to be output properly
-					// Get first word of summary
-					String title = newEvent.getTitle();
-					int titleSpace = title.indexOf(' ');
-					String titleFirstWord, locationFirstWord;
-					if (titleSpace == -1)
-						titleFirstWord = title;
-					else 
-						titleFirstWord = title.substring(0, titleSpace);
-					// Get first word of location
-					String location = newEvent.getLocation();
-					int locationSpace = location.indexOf(' ');
-					if (locationSpace == -1)
-						locationFirstWord = location;
-					else 
-						locationFirstWord = location.substring(0, locationSpace);
-					if (locationFirstWord.length() > 2)
-						locationFirstWord = "_at_" + locationFirstWord;
-					newEvent.setFileName(titleFirstWord + locationFirstWord);
-					
-					// Use this to rewrite onto import file
-					// newEvent.setFileName(fileName);
-					
-					
 					// If .ics file contained tzid in dtstart/dtend, must convert to offset time
 					if (newEvent.getTzid() != null){
 						//System.out.println("tzid is: " + newEvent.getTzid()); //TEST
@@ -81,6 +59,38 @@ public class ReadFile {
 				    // Set Dtstart and Dtend only after timezone entry is known
 				    newEvent.setDtstart();
 				    newEvent.setDtend();
+				    
+				    System.out.println("Would you like to overwrite the original file on export? Enter Y/N.");
+				    // Use this to rewrite onto import file
+				    String overwrite = keyboard.nextLine();
+				    if (overwrite.equalsIgnoreCase("Y") || overwrite.equalsIgnoreCase("Y")) {
+				    		newEvent.setFileName(fileName.substring(0, fileName.length()-4));
+	                    }
+	                else if (overwrite.equalsIgnoreCase("No") || overwrite.equalsIgnoreCase("N")) {
+	                    	// Need a filename for event to be output properly
+	    					// Get first word of summary
+	    					String title = newEvent.getTitle();
+	    					int titleSpace = title.indexOf(' ');
+	    					String titleFirstWord, locationFirstWord;
+	    					if (titleSpace == -1)
+	    						titleFirstWord = title;
+	    					else 
+	    						titleFirstWord = title.substring(0, titleSpace);
+	    					// Get first word of location
+	    					String location = newEvent.getLocation();
+	    					int locationSpace = location.indexOf(' ');
+	    					if (locationSpace == -1)
+	    						locationFirstWord = location;
+	    					else 
+	    						locationFirstWord = location.substring(0, locationSpace);
+	    					if (locationFirstWord.length() > 2)
+	    						locationFirstWord = "_at_" + locationFirstWord;
+	    					newEvent.setFileName(titleFirstWord + locationFirstWord);
+	                    }
+	                else {
+	                  	  System.out.print("Type \'Y\' or \'N\' to whether you want to Test Mode:");
+	                  	  overwrite = keyboard.nextLine();
+	                    }
 					
 					//tests list
 					calendar.add(newEvent);					
